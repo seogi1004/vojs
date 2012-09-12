@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>[View Object] - vojs demo</title>
+<meta charset="utf-8">
+<meta name="description" content="vojs demo">
+<meta name="author" content="Moon-Hak-I">
+
+<script src="../lib/jquery-min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../vo.js"></script>
+
+<script>
+    var body = {
+        test: function() {
+            this.bind.name("testtesttest");
+        }
+    };
+
+    $(function() {
+        vo.includeTpl("test", { path: "tpl" });
+        vo.applyTo(body);
+        
+        body.act.onClick = function(e, i) {
+            console.log(e);
+        	alert($(e.target).html());        	
+        }
+	});	
+</script>
+</head>
+<body>
+	<a href="#" data-act="onClick" data-bind="1:onClick">클릭</a><br>
+	<a href="#" data-act="onClick#dblclick" data-bind="2:onClick">더블클릭</a>
+    <br><br>
+    
+    <div data-bind="1:size#font-size">안녕1</div>
+    <div data-bind="2:size">안녕2</div>
+    <br>
+    
+    <div data-bind="1:test">TestTeset</div>
+    <br>
+    
+    <div data-tag="t1">Tag1</div>
+    <div id="t2">Tag2</div>
+    <br>
+    <div data-tag="1:tag1">Tag1-1</div>
+    <div data-tag="2:tag1">Tag1-2</div>
+    <div data-tag="1:tag2">Tag2-1</div>
+    <div data-tag="2:tag2">Tag2-2</div>
+</body>
+</html>
