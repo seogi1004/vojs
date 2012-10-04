@@ -37,6 +37,10 @@
 				initActProc("change", e);
 			});
 
+			root.on("keydown", "[data-act]", function(e) {
+				initActProc("keydown", e);
+			});
+			
 			root.on("keyup", "[data-act]", function(e) {
 				initActProc("keyup", e);
 			});
@@ -55,13 +59,13 @@
 					if(self.act[act]) {
 						self.act[act].call(self, e); 
 					} else {
-						// undefined 예외처리
+						throw new Error("VOJS_ACT_ERR: " + act + " is not defined");
 					}
 				} else {
 					if(self.act[act]) { 
 						self.act[act].call(self, e, key); 
 					} else { 
-						// undefined 예외처리
+						throw new Error("VOJS_ACT_ERR: " + act + " is not defined");
 					}	
 				}
 			}
@@ -101,7 +105,9 @@
 					command = getParseCommand(tmp_func);
 				
 				//-- command type가 있을 경우, 예외처리
-				if(command.type) { return; }
+				if(command.type) { 
+					throw new Error("VOJS_TAG_ERR: invalid expression"); return; 
+				}
 				
 				// data-tag 태그가 없고, id일 경우
 				if(typeof(tmp_func) != "string") { 
@@ -260,7 +266,7 @@
 					}
 				})(func);
 				
-				eval("self.bind." + func + " = self.bindMultiProc;");
+				self.bind[func] = self.bindMultiProc;
 			}
 		}
 		
@@ -397,10 +403,11 @@
 	}
 	
 	ViewObject.includeTpl = function() {
-		var tpl_path = "",
-			tpl_ext = "tpl",
+		var tpl_path = (ViewObject.includePath) ? ViewObject.includePath : "",
+			tpl_ext = (ViewObject.includeExt) ? ViewObject.includeExt : "tpl",
 			len = arguments.length;
 			
+		// 옵션 체크, 마지막 파라메터가 객체일 경우
 		if(typeof(arguments[len - 1]) == "object") {
 			var opts = arguments[len - 1];
 			

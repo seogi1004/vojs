@@ -1,36 +1,30 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>[View Object] - vojs demo</title>
-<meta charset="utf-8">
-<meta name="description" content="vojs demo">
-<meta name="author" content="Moon-Hak-I">
-
 <script src="../core/jquery-min.js"></script>
 <script src="../core/underscore-min.js"></script>
 <script src="../vo.js"></script>
 
 <link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
 <script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
-
 <script>
-    var body = {
-        test: function() {
-            this.bind.name("testtesttest");
-        }
-    };
+    var body = { };
 
     $(function() {
         vo.applyTo(body);
         
-        body.act.onClick = function(e, i) {
-            console.log(e);
-        	alert($(e.target).html());        	
+        body.act.print = function(e) {
+        	var txt = $(e.target).val();
+        	body.bind.textShow(txt);
         }
 	});	
 </script>
 </head>
 <body>
-
+	<div class="alert" data-bind="textShow"></div>
+	<div class="alert alert-error" data-bind="textShow"></div>
+	<div class="alert alert-success" data-bind="textShow"></div>
+	
+	<input type="text" placeholder="Text input" width="100%" data-act="print#keyup" />
 </body>
 </html>

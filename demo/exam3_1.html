@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="../core/jquery-min.js"></script>
+<script src="../core/underscore-min.js"></script>
+<script src="../vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<script>
+    var PersonList = function() {
+    	vo.applyTo(this);
+    	
+    	var persons = { top: [], bottom: [] };
+    	var act = this.act,
+    		tpl = this.tpl,
+    		tag = this.tag;
+    	
+    	function update(type) {
+    		var id = (type == "top") ? "personListTop" : "personListBottom";
+    		tpl.personList(id, { persons: persons[type], type: type });
+    	}
+    	
+    	act.addPerson = function(e, type) {
+    		persons[type].push(tag.val("person")); 
+    		update(type);
+    	}
+    	
+    	act.deletePerson = function(e, key) {
+    		var type = $(e.target).data("type");
+    		
+    		persons[type].splice(key, 1);	
+    		update(type);
+    	}
+    }
+    
+    $(function() {
+    	new PersonList();
+	});	
+</script>
+</head>
+<body>
+	<!-- Main, Table -->
+	<table class="table table-bordered">
+  		<thead>
+			<tr>
+				<th width="25%">Name</th>
+				<th width="25%">Age</th>
+				<th width="25%">Location</th>
+				<th width="25%">-</th>
+			</tr>
+		</thead>
+		<tbody id="personListTop">
+			<!-- include template -->
+		</tbody>
+	</table>
+	<hr>
+	<table class="table table-bordered">
+  		<thead>
+			<tr>
+				<th width="25%">Name</th>
+				<th width="25%">Age</th>
+				<th width="25%">Location</th>
+				<th width="25%">-</th>
+			</tr>
+		</thead>
+		<tbody id="personListBottom">
+			<!-- include template -->
+		</tbody>
+	</table>
+	
+	<!-- Main, Button -->
+	<button class="btn btn-large btn-primary" type="button" data-toggle="modal" href="#showInput">Add</button>
+	
+	<!-- Load Tempalte -->
+	<script>vo.includeTpl("exam3_1", { path: "tpl" });</script>
+</body>
+</html>

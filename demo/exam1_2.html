@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="../core/jquery-min.js"></script>
+<script src="../core/underscore-min.js"></script>
+<script src="../vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<script>
+    var Progress = function() {
+    	vo.applyTo(this);
+    	
+    	var percent = { blue: 0, green: 0, red: 0 };
+    	var bind = this.bind,
+    		act = this.act;
+    		    	
+    	act.start = function(e, key) {
+    		if(percent[key] < 100) {
+    			percent[key] += 20;
+    			bind.percent(key, percent[key] + "%");
+    		}
+    	}
+    }
+    
+    $(function() {
+    	new Progress();
+	});	
+</script>
+</head>
+<body>
+	<div class="progress progress-primary">
+		<div class="bar" style="width: 0%" data-bind="blue:percent#width"></div>
+	</div>
+	<div class="progress progress-success">
+		<div class="bar" style="width: 0%" data-bind="green:percent#width"></div>
+	</div>
+	<div class="progress progress-danger">
+		<div class="bar" style="width: 0%" data-bind="red:percent#width"></div>
+	</div>
+	
+	<div class="btn-group">
+		<button class="btn" data-act="blue:start">Blue</button>
+		<button class="btn" data-act="green:start">Green</button>
+		<button class="btn" data-act="red:start">Red</button>
+	</div>
+</body>
+</html>
