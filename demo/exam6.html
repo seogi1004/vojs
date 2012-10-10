@@ -7,25 +7,20 @@
 
 <link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
 <script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>body { padding: 5px; }</style>
+
 <script>
 	var person = { };
 
     $(function() {
 		vo.applyTo(person);
+		var tag = person.tag;
 		
-		person.act.showGet = function(e) {
-			var info = person.bind.get("info");
+		person.act.showTag = function(e) {
+			alert($(tag.button).html());
 			
-			for(var i in info) {
-				alert(i + " : " + info[i].value);
-			}
-		}
-		
-		person.act.showVal = function(e) {
-			var info = person.bind.val("info");
-			
-			for(var i in info) {
-				alert(i + " : " + info[i]);
+			for(var i in tag.info) {
+				alert(i + " : " + tag.info[i].value);
 			}
 		}
 	});	
@@ -37,26 +32,25 @@
 		<div class="control-group">
             <label class="control-label" for="input01">Name</label>
             <div class="controls">
-				<input type="text" class="input-xlarge" value="Moon-Hak-I" data-bind="name:info">
+				<input type="text" class="input-xlarge" value="Moon-Hak-I" data-tag="name:info">
             </div>
 		</div>
 		<div class="control-group">
             <label class="control-label" for="input01">Age</label>
             <div class="controls">
-				<input type="text" class="input-xlarge" value="27" data-bind="age:info">
+				<input type="text" class="input-xlarge" value="27" data-tag="age:info">
             </div>
 		</div>
 		<div class="control-group">
             <label class="control-label" for="input01">Location</label>
             <div class="controls">
-				<input type="text" class="input-xlarge" value="Seoul" data-bind="location:info">
+				<input type="text" class="input-xlarge" value="Seoul" data-tag="location:info">
             </div>
 		</div>
 		<div class="control-group">
             <label class="control-label" for="input01">&nbsp;</label>
             <div class="controls">
-				<a href="#" class="btn" data-act="showGet">Get</a>
-				<a href="#" class="btn" data-act="showVal">Val</a>
+				<a href="#" class="btn" data-act="showTag" data-tag="button">Tag</a>
             </div>
 		</div>
 	</fieldset>

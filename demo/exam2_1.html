@@ -7,6 +7,8 @@
 
 <link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
 <script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>body { padding: 5px; }</style>
+
 <script>
     var PersonList = function() {
     	vo.applyTo(this);
@@ -21,11 +23,16 @@
     	}
     	
     	act.addPerson = function(e) {
-    		persons.push(tag.val("person")); update();
+    		persons.push(tag.val("person")); 
+    		update();
+    		
+    		$(tag.showInput).modal("hide");
+    		
     	}
     	
     	act.deletePerson = function(e, key) {
-    		persons.splice(key, 1);	update();
+    		persons.splice(key, 1);	
+    		update();
     	}
     }
     

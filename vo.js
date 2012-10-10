@@ -367,13 +367,15 @@
 						index = 0;
 					
 					for(var i in cmdList) {
-						var cmd = cmdList[i].cmd;
-						
-						if(cmd.key) { key = cmd.key; } 
-						else { key = index; index++; }
-						
-						if(is_elem) list[key] = cmdList[i].elem;
-						else list[key] = getData(cmdList[i]);
+						if(typeof(cmdList[i]) != "function") {
+							var cmd = cmdList[i].cmd;
+							
+							if(cmd.key) { key = cmd.key; } 
+							else { key = index; index++; }
+							
+							if(is_elem) list[key] = cmdList[i].elem;
+							else list[key] = getData(cmdList[i]);
+						}
 					}
 					
 					return list;

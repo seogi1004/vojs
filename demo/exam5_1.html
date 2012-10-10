@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="../core/jquery-min.js"></script>
+<script src="../core/underscore-min.js"></script>
+<script src="../vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>body { padding: 5px; } .btn { width: 220px; }</style>
+
+<script>
+	var body = { };
+
+    $(function() {
+		vo.applyTo(body);
+		
+		body.act.test1 = function(e) {
+			alert("test1");
+		}
+		
+		body.act.test2 = function(e) {
+			alert("test2");
+		}
+		
+		body.act.test3 = function(e) {
+			alert("test3");
+		}
+		
+		body.act.test4 = function(e) {
+			alert("test4");
+		}
+		
+		body.act.test5 = function(e) {
+			alert("test5");
+		}
+		
+		body.act.test6 = function(e) {
+			alert("test6");
+		}
+		
+		body.act.test7 = function(e) {
+			alert("test7");
+		}
+	});	
+</script>
+</head>
+<body>
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th width="40px">No.</th>
+			<th width="80px">Type</th>
+			<th width="222px">Test</th>
+			<th>Code</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>1</td>
+			<td>click</td>
+			<td><button class="btn" type="button" data-act="test1">Click Test (default)</button></td>
+			<td>
+				&lt;button class="btn" type="button" data-act="test1"&gt;Click Test (default)&lt;/button&gt;
+			</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>dblclick</td>
+			<td><button class="btn" type="button" data-act="test2#dblclick">Double-Click Test</button></td>
+			<td>
+				&lt;button class="btn" type="button" data-act="test2#dblclick"&gt;Double-Click Test&lt;/button&gt;
+			</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>mousedown</td>
+			<td><button class="btn" type="button" data-act="test3#mousedown">Mouse-Down Test</button></td>
+			<td>
+				&lt;button class="btn" type="button" data-act="test3#mousedown"&gt;Mouse-Down Test&lt;/button&gt;
+			</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>mouseup</td>
+			<td><button class="btn" type="button" data-act="test4#mouseup">Mouse-Up Test</button></td>
+			<td>
+				&lt;button class="btn" type="button" data-act="test4#mouseup"&gt;Mouse-Up Test&lt;/button&gt;
+			</td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>change</td>
+			<td>
+				<select data-act="test5#change">
+					<option value="1">Test 1</option>
+					<option value="2">Test 2</option>
+					<option value="3">Test 3</option>
+					<option value="4">Test 4</option>
+					<option value="5">Test 5</option>
+				</select>
+			</td>
+			<td>
+				&lt;select data-act="test5#change"&gt;...&lt;/select&gt;
+			</td>
+		</tr>
+		<tr>
+			<td>6</td>
+			<td>keydown</td>
+			<td><input type="text" placeholder="Text input" data-act="test6#keydown" /></td>
+			<td>
+				&lt;input type="text" placeholder="Text input" data-act="test6#keydown" /&gt;
+			</td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>keyup</td>
+			<td><input type="text" placeholder="Text input" data-act="test7#keyup" /></td>
+			<td>
+				&lt;input type="text" placeholder="Text input" data-act="test7#keyup" /&gt;
+			</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>
