@@ -4,16 +4,39 @@
 	<meta charset='utf-8'>
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="description" content="[JavaScript Library] - vojs" />
+	
+	<title>[JavaScript Library] - vojs</title>
+	
 	<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+	
+	<script type="text/javascript" src="http://static.inpost.kr/lib/jquery/jquery.js"></script>
+	<script type="text/javascript" src="http://static.inpost.kr/lib/syntaxhighlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" src="http://static.inpost.kr/lib/syntaxhighlighter/scripts/shAutoloader.js"></script>
+	<link type="text/css" rel="stylesheet" href="http://static.inpost.kr/lib/syntaxhighlighter/styles/shCoreDefault.css"/>
+
+	<script>
+		function path() {
+			var args = arguments,
+				result = [];
+		
+			for(var i = 0; i < args.length; i++)
+				result.push(args[i].replace('@', 'http://static.inpost.kr/lib/syntaxhighlighter/scripts/'));
+		
+			return result;
+		};
+		
+		$(function() {
+			SyntaxHighlighter.all();
+		});
+	</script>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-
-	<title>[Test] View Object</title>
 </head>
 
 <body>
@@ -26,67 +49,618 @@
 </header>
 
 <div id="content-wrapper">
-	<div class="inner clearfix">
-		<section id="main-content">
-			<h3>Welcome to GitHub Pages.</h3>
-
+<div class="inner clearfix">
+	<section id="main-content">
+		<div class="section">
+			<h3>Introduction</h3>
 			<p>
-				This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:
+				<code>vojs</code>는 뷰-오브젝트 자바스크립트의 약자이며 클라이언트 영역의 UI 구현을 위한 라이브러리입니다. 
+				참고로 <code>vojs</code>는 <code>ExtJS</code>나 <code>YUI</code>와 같이 다양한 UI 컴포넌트를 제공하는 라이브러리가 아닙니다. 
+				<code>vojs</code>는 뷰-오브젝트라는 개념을 도입하여 UI 컴포넌트들을 보다 쉽게 구현할 수 있는 방법을 제공합니다.
 			</p>
-			<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
 			
-
-
+			<h4>Development Issues</h4>
 			<p>
-				If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.
+				단순한 웹 페이지가 아닌 SPA(Single Page Appliction) 방식의 동적인 웹에 대한 수요가 증가함에 따라 <code>Flex</code>나 <code>Silverlight</code>와 같은 RIA 기술이 부각되었지만, 
+				최근 스마트폰 사용자가 폭발적으로 늘어남에 따라 앞서 말한 RIA 기술은 다소 무겁다라는 이유로 걷어내고 있는 추세입니다.<br><br>
+				
+				그렇기 때문에 브라우저에 기본적으로 내장된 자바스크립트와 스타일시트만을 이용한 웹앱을 구현하는 방식이 다시 이슈가 되었지만, 
+				복잡한 UI를 만들기 위해서는 다양한 로직들이 클라이언트 영역에 구현되어 있어야 하기 때문에 개발과 디자인/코딩의 구분이 모호해지는 현상이 발생하게 되었습니다.<br><br>
+				
+				더군다나 수많은 HTML 태그를 구분하기 위해 무분별하게 키 값을 지정하고, 이를 셀렉트하여 동적으로 데이터를 변경하는 코드가 난무함으로써 뷰와 로직의 경계가 모호해지는 현상이 발생하기도 합니다. 
+				<code>vojs</code>는 이러한 뷰와 로직의 구분을 명확하게 해주며, 보다 직관적으로 개발자 관점에서 UI를 구현할 수 있습니다.
 			</p>
-
-			<h3>Designer Templates</h3>
-
+			
+			<h4>Supported Browsers</h4>
 			<p>
-				We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.
+				아직 모든 브라우저에서 테스트를 해보지는 않았지만 모바일을 포함한 대부분의 브라우저에서 동작합니다. (IE6++, Chrome, Firefox, Safari, ...)
 			</p>
 
-			<h3>Rather Drive Stick?</h3>
-
+			<h4>How to Use</h4>
 			<p>
-				If you prefer to not use the automatic generator, push a branch named <code>
-					gh-pages</code>
-				to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.
+				<code>vojs</code>를 사용하기 위해서는 먼저 <a href="http://jquery.com/" target="_blank">jQuery</a>와 
+				<a href="hhttp://documentcloud.github.com/underscore/" target="_blank">Underscore.js</a>를 로드해야합니다. 
+				<code>Underscore.js</code>는 다양한 유틸리티 함수들을 제공하는 심플한 라이브러리이며, <code>vojs</code>의 기본 템플릿 엔진으로 사용됩니다. 
+				그리고 <code>jQuery</code>는 워낙 많이 사용하는 라이브러리이기 때문에 별도로 설명을 하지 않겠습니다. 
+	
+				<pre class="brush: html;">
+					<script src="../core/jquery-min.js"></script>
+					<script src="../core/underscore-min.js"></script>
+					<script src="../vo.js"></script>
+				</pre>
 			</p>
-
-			<h3>Authors and Contributors</h3>
-
+		</div>
+		
+		<div class="section">
+			<h3>Concept</h3>
+						
 			<p>
-				You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>
-					&lt;a&gt;</code>
-				element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.
+				뷰-오브젝트는 웹 페이지에서 뷰가 되는 HTML 태그와 뷰를 구성하는 데이터, 즉 '뷰와 객체는 동일하다'라는 것이 기본 컨셉입니다. 먼저 아래 HTML 코드를 보도록 하겠습니다.<br/>
+				<pre class="brush: html;">
+					&lt;tr id="person1"&gt;
+						&lt;td data-bind="name"&gt;&lt;/td&gt;
+						&lt;td data-bind="age"&gt;&lt;/td&gt;
+						&lt;td&gt;<button type="button" data-act="addAge">Add 1-year</button>&lt;/td&gt;
+					&lt;/tr&gt;
+					&lt;tr id="person2"&gt;
+						&lt;td data-bind="name"&gt;&lt;/td&gt;
+						&lt;td data-bind="age"&gt;&lt;/td&gt;
+						&lt;td&gt;<button type="button" data-act="addAge">Add 1-year</button>&lt;/td&gt;
+					&lt;/tr&gt;
+				</pre>
+				
+				위의 HTML 코드는 <code>person1</code>과 <code>person2</code>의 이름과 나이를 보여주는 뷰입니다. 그리고 HTML 태그와 매칭할 객체의 클래스를 정의하도록 하겠습니다.<br/>
+				<pre class="brush: js;">
+					var Person = function(id, name, age) {
+						vo.applyTo(this, id);
+						  
+						var self = this;
+						  
+						self.name = name;
+						self.age = age;
+						  
+						self.bind.name(self.name);
+						self.bind.age(self.age);
+						  
+						self.act.addAge = function() {
+							self.bind.age(++self.age);
+						}
+					};
+				</pre>
+				
+				<code>Person</code>이라는 클래스를 만들었으니 HTML 태그에서 ID 값이 <code>person1</code>, <code>person2</code>인 뷰의 객체를 생성하겠습니다.
+				<pre class="brush: js;">
+					var person1 = new Person("person1", "James", 21),
+	    				person2 = new Person("person2", "Thomas", 15);
+				</pre>
+				
+				<code>James</code>와 <code>Thomas</code>라는 이름을 가진 객체를 생성하였다면 아래와 같은 예제가 실행됩니다. (<a href="http://app.inpost.kr/vojs/demo/exam1_4.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam1_4.html" style="width:100%; height:142px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+				
+				<code>Add 1-year</code> 버튼을 클릭하면 대상의 나이가 증가합니다. 먼저 <code>Person</code>클래스의 2라인에서 호출된 <code>vo.applyTo(this, id);</code> 코드는 
+				객체가 생성이 될 때, 해당 객체의 뷰를 전달 받은 ID 값의 HTML 태그로 설정합니다. 뷰가 설정이 되면 객체는 동적으로 뷰를 변경할 수 있습니다. <br/><br/>
+				
+				뷰의 데이터 속성을 <code>data-bind</code>로 설정을 하면, 해당 뷰를 포함하고 있는 객체는 <code>bind.name</code> 메소드를 가지게 됩니다. 
+				그리고 <code>self.bind.name(self.name);</code>과 같이 호출하면 뷰의 내용이 변경됩니다.
+				<br><br>
+					
+				참고로 이러한 규칙은 <code>bind</code> 외 다른 요소들도 동일하게 적용됩니다. 
 			</p>
-
-			<h3>Support or Contact</h3>
-
+		</div>
+		
+		<div class="section">
+			<h3>Component</h3>
 			<p>
-				Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.
+				<code>vojs</code>는 <code>Action</code>, <code>Binding</code>, <code>Template</code>, <code>Tag</code> 이렇게 총 4가지로 구성되어 있습니다. 
+				뷰-오브젝트를 적용하기 위해서는 먼저 HTML 태그에 각각의 구성 요소에 맞는 데이터 속성을 설정해야 합니다. 
 			</p>
-		</section>
-
-		<aside id="sidebar">
-			<a href="https://github.com/seogi1004/vojs/zipball/master" class="button"> <small>Download</small> .zip file </a>
-			<a href="https://github.com/seogi1004/vojs/tarball/master" class="button"> <small>Download</small> .tar.gz file </a>
-
-			<p class="repo-owner">
-				<a href="https://github.com/seogi1004/vojs"></a> is maintained by <a href="https://github.com/seogi1004">seogi1004</a>.
-			</p>
-
+			
+			<h5>View Setting</h5>
 			<p>
-				This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+				HTML 태그는 데이터 속성을 가질 수 있는데, 해당 속성의 기본적인 규칙은 다음과 같습니다.<br>
+				
+				<pre class="brush: html;">
+					<element data-xxx="key:name#type">Value</element>
+				</pre>
+				
+				HTML 태그가 가지는 데이터 속성 종류는 아래 표와 같습니다.
+				<table class="table table-bordered">
+					<tr>
+						<th width="50%">Name</th>
+						<th>Attribute</th>
+					</tr>
+					<tr>
+						<td>Action</td>
+						<td>data-act</td>
+					</tr>
+					<tr>
+						<td>Binding</td>
+						<td>data-bind</td>
+					</tr>
+					<tr>
+						<td>Template</td>
+						<td>data-tpl</td>
+					</tr>
+					<tr>
+						<td>Tag</td>
+						<td>data-tag</td>
+					</tr>
+				</table>
+				
+				<code>key</code>는 <code>Template</code>을 제외한 모든 요소들이 선택적으로 가질 수 있으며, <code>type</code>은 <code>Action</code>과 <code>Binding</code>에만 존재합니다.
+				그리고 <code>name</code>은 모든 요소가 필수적으로 가지고 있어야 합니다.
 			</p>
-		</aside>
-	</div>
+			
+			<h5>Object Setting</h5>
+			<p>
+				뷰-오브젝트를 적용하는 <code>vo.applyTo(object, [element id])</code> 메소드의 <code>id</code>를 지정하지 않으면 기본적으로 <code>body</code> 태그를 해당 객체의 뷰로 설정합니다.
+				<br><br>
+				
+				객체에 뷰-오브젝트를 적용하는 방법은 다양합니다. 먼저 아래는 일반적으로 사용하는 클래스 내부에 설정하는 방법이며 뷰-오브젝트를 적용할 객체가 여러 개일 경우에 사용합니다. 
+				<pre class="brush: html;">
+					&lt;body&gt;
+						<div id="body1"><!-- Apply the view of the object --></div>
+						<div id="body2"><!-- Apply the view of the object --></div>
+					&lt;body/&gt;
+				</pre>
+				<pre class="brush: js;">
+					var Body = function(id) {
+						vo.applyTo(this, id);
+					}
+					
+					var b1 = new Body("body1"),
+						b2 = new Body("body2");
+				</pre>
+				
+				두번째로 객체리터럴에 적용하는 방법입니다. 이와 같은 방법은 비교적 단순한 로직을 가지는 단일 UI에 적용할 때 사용합니다.
+				<pre class="brush: html;">
+					&lt;body&gt;
+						<!-- Apply the view of the object -->
+					&lt;/body&gt;
+				</pre>
+				<pre class="brush: js;">
+					var body = {};
+					vo.applyTo(body);
+				</pre>
+			</p>
+			
+			<div class="blank"></div>
+			
+			<!-- Tag -->
+			<h4>Tag</h4>
+			<p>
+				태그는 엘리먼트를 고유 값으로 설정할 수 있습니다. 그냥 <code>id</code>를 지정하여 셀렉트 하는 방법도 있지만 해당 엘리먼트가 보다 명확하게 UI와 관련된 뷰임을 명시해줄 수 있습니다. 
+				또한 연관성 있는 엘리먼트들을 동일한 <code>name</code>의 뷰 속성에 <code>key</code>로 구분할 수 있기 때문에 좀 더 구조적인 UI 구현이 가능합니다.
+				
+				<pre class="brush: html;">
+					<input type="text" id="name" />
+					<input type="text" data-tag="age" />
+					<input type="text" data-tag="location" />
+				</pre>
+				
+				뷰-오브젝트의 <code>tag</code> 프로퍼티를 통해 <code>id</code> 또는 <code>data-tag</code> 속성이 설정된 HTML 코드를 가져올 수 있습니다.
+				<pre class="brush: js;">
+					var Body = function() {
+						vo.applyTo(this);
+						
+						var name = this.tag.name.value,
+							age = this.tag.age.value,
+							location = this.tag.location.value;
+							
+						alert(name + ", " + age + ", " + location);
+					}
+					
+					new Body();
+				</pre>
+			</p>
+			
+			<h5>Advanced</h5>
+			<p>
+				만약에 뷰 속성에 <code>key</code>가 있다면 해당 태그는 단일 객체가 아니고, <code>key</code>가 존재하는 배열 형태의 객체가 됩니다. 
+				
+				<pre class="brush: html;">
+					<input type="text" data-tag="name:info" />
+					<input type="text" data-tag="age:info" />
+					<input type="text" data-tag="location:info" />
+				</pre>
+				
+				이렇게 <code>key</code>를 지정함으로써 <code>info</code>이라는 객체의 맴버들로 해당 폼 태그를 좀 더 구조적으로 가져올 수 있습니다.
+				<pre class="brush: js;">
+					var person = obj.tag.info;
+					
+					alert(
+						person["name"].value + ", " + 
+						person["age"].value + ", " + 
+						person["location"].value
+					);
+				</pre>
+				
+				아래는 <code>key</code>가 지정된 폼 태그를 활용한 예제입니다. (<a href="http://app.inpost.kr/vojs/demo/exam6.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam6.html" style="width:100%; height:220px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+			</p>
+			<!--// Tag -->
+			
+			<div class="blank"></div>
+			
+			<!-- Action -->
+			<h4>Action</h4>
+			<p>
+				액션은 자바스크립트 이벤트와 비슷한 개념입니다. 뷰 데이터 속성에 값을 입력하고, 해당 엘리먼트에 이벤트를 발생시키면 뷰-오브젝트가 적용된 객체에 해당 <code>name</code>과 동일한 메소드가 호출됩니다.
+				<pre class="brush: html;">
+					<a href="#" data-act="start">Start</a>
+				</pre>
+				
+				<code>Start</code> 링크를 클릭하면, <code>Body</code> 클래스에 정의된 <code>start</code>메소드가 호출됩니다.
+				<pre class="brush: js;">
+					var Body = function() {
+						vo.applyTo(this);
+						
+						this.act.start = function(e) {
+							// Action
+						}	
+					}
+					
+					new Body();
+				</pre>
+				
+				액션은 총 7가지의 이벤트 타입을 제공합니다. 테스트는 아래 예제를 통해서 할 수 있습니다. (<a href="http://app.inpost.kr/vojs/demo/exam5_1.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam5_1.html" style="width:100%; height:404px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+			</p>
+				
+			<h5>Advanced</h5>
+			<p>
+				<code>vojs</code>의 뷰 속성에는 <code>key</code> 값을 넣어서 동일한 이름의 요소를 구분하여 사용할 수 있습니다.
+				
+				<pre class="brush: html;">
+					<a href="#" data-act="1:start">Start 1</a>
+					<a href="#" data-act="2:start">Start 2</a>
+				</pre>
+				
+				<code>Start</code> 링크를 클릭하면, <code>Body</code> 클래스에 정의된 <code>start</code>메소드가 호출되며 해당 뷰 속성에 정의된 <code>key</code> 값을 두번째 매개변수로 받을 수 있습니다.
+				<pre class="brush: js;">
+					obj.act.start = function(e, key) {
+						// Action
+					}	
+				</pre>
+				
+				그럼, 아래 예제를 통해 테스트 해보겠습니다. (<a href="http://app.inpost.kr/vojs/demo/exam5_2.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam5_2.html" style="width:100%; height:236px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+			</p>
+			<!--// Action -->
+			
+			<div class="blank"></div>
+			
+			<!-- Binding -->
+			<h4>Binding</h4>
+			<p>
+				바인딩은 뷰의 내용을 동적으로 변경시킬 수 있는 구성 요소입니다.
+				<pre class="brush: html;">
+					<div data-bind="name"></div>
+				</pre>
+				
+				<code>Body</code> 클래스에 정의된 <code>name</code>메소드를 호출해주면, 해당 뷰에 입력한 데이터가 출력됩니다.
+				<pre class="brush: js;">
+					var Body = function() {
+						vo.applyTo(this);
+						
+						// this bind.name(value);
+						this.bind.name("Michael");
+					}
+					
+					new Body();
+				</pre>
+				
+				또한 다수의 HTML 태그에 동일한 바인딩 이름을 설정하면 바인딩 메소드가 호출될 때, 모든 뷰가 변경됩니다.
+				<pre class="brush: html;">
+					<div class="alert" data-bind="textShow"></div>
+					<div class="alert alert-error" data-bind="textShow"></div>
+					<div class="alert alert-success" data-bind="textShow"></div>
+				</pre>
+				
+				그럼, 아래 예제를 통해 테스트 해보겠습니다.  (<a href="http://app.inpost.kr/vojs/demo/exam1_1.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam1_1.html" style="width:100%; height:209px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+			</p>
+			
+			<h5>Advanced</h5>
+			<p>
+				뷰 속성에 <code>type</code>을 설정하지 않은 경우에는 기본적으로 해당 뷰의 내용(<code>innerHTML</code> 또는 <code>value</code>)의 값을 출력합니다. 
+				만약에 출력할 값이 <code>innerHTML</code>이나 <code>value</code>가 아니고, <code>css</code>나 <code>attribute</code>의 속성 중 하나라면 HTML 태그에 <code>type</code>을 설정해주면 됩니다.
+				
+				<pre class="brush: html;">
+					<div id="blue" class="progress progress-primary">
+						<div class="bar" style="width: 0%" data-bind="percent#width"></div>
+					</div>
+					<div id="green" class="progress progress-success">
+						<div class="bar" style="width: 0%" data-bind="percent#width"></div>
+					</div>
+					<div id="red" class="progress progress-danger">
+						<div class="bar" style="width: 0%" data-bind="percent#width"></div>
+					</div>
+				</pre>
+				
+				'#' 다음에 오는 값이 <code>type</code>입니다. <code>attribute</code>는 해당 속성에 'attr.' 접두사를 붙혀줘야 하며, <code>css</code>는 접두사를 생략할 수 있습니다.
+				<pre class="brush: html;">
+					<div class="bar" width="0%" data-bind="percent#attr.width"></div>
+				</pre>
+				
+				그럼, 아래 예제를 통해 테스트 해보겠습니다. (<a href="http://app.inpost.kr/vojs/demo/exam1_3.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam1_3.html" style="width:100%; height:160px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+				
+				참고로 이 예제는 프로그레스 바를 각각의 별도의 뷰-오브젝트로 설정하여 구현한 것입니다. 이를 하나의 뷰-오브젝트로 설정하고, 각각의 프로그레스 바를 <code>key</code>로 구분하여 만들 수도 있습니다.
+				<pre class="brush: html;">
+					<div class="progress progress-primary">
+						<div class="bar" style="width: 0%" data-bind="blue:percent#width"></div>
+					</div>
+					<div class="progress progress-success">
+						<div class="bar" style="width: 0%" data-bind="green:percent#width"></div>
+					</div>
+					<div class="progress progress-danger">
+						<div class="bar" style="width: 0%" data-bind="red:percent#width"></div>
+					</div>
+				</pre>
+				
+				각각의 뷰 속성에 <code>key</code>를 설정하였다면 아래와 같은 방법으로 메소드를 호출하여 각각의 <code>key</code>와 매칭되는 뷰의 내용을 변경할 수 있습니다.
+				<pre class="brush: js;">
+					// obj.bind.percent(key, value);
+					obj.bind.percent("blue", "20%");
+					obj.bind.percent("green", "40%");
+					obj.bind.percent("red", "60%");
+				</pre>
+				
+				그럼, 아래 예제를 통해 테스트 해보겠습니다. (<a href="http://app.inpost.kr/vojs/demo/exam1_2.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam1_2.html" style="width:100%; height:160px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+			</p>
+			<!--// Binding -->
+			
+			<div class="blank"></div>
+			
+			<!-- Template -->
+			<h4>Template</h4>
+			<p>
+				<code>vojs</code>는 <a href="hhttp://documentcloud.github.com/underscore/" target="_blank">Underscore.js</a> 기반의 템플릿을 지원합니다. 
+				템플릿은 테이블이나 리스트 형태의 데이터를 출력하는 UI에 사용하면 매우 편리합니다.
+				
+				템플릿을 사용하기 위해서는 먼저 아래와 같이 템플릿 코드를 만들어야 합니다.
+				<pre class="brush: html;">
+					&lt;script id="personList" type="text/template"&gt;
+						&lt;% for(var i in persons) { %&gt;
+						&lt;tr&gt;
+							<td>&lt;%= persons[i].name %&gt;</td>
+							<td>&lt;%= persons[i].age %&gt;</td>
+							<td>&lt;%= persons[i].location %&gt;</td>
+						&lt;/tr&gt;
+						&lt;% } %&gt;
+					&lt;/script&gt;
+				</pre>
+				
+				그리고 템플릿을 적용할 태그의 데이터 속성 값을 앞서 정의한 템플릿 코드의 ID 값으로 설정합니다.
+				<pre class="brush: html;">
+					<table class="table table-bordered">
+				  		<thead>
+							<tr>
+								<th width="33%">Name</th>
+								<th width="33%">Age</th>
+								<th>Location</th>
+							</tr>
+						</thead>
+						<tbody data-tpl="personList">
+							<!-- include template -->
+						</tbody>
+					</table>
+				</pre>
+				
+				마지막으로 템플릿 영역을 갱신하기 위해서는 <code>tpl.personList</code> 메소드를 호출하면 됩니다.
+				<pre class="brush: js;">
+					var Body = function() {
+						vo.applyTo(this);
+						
+						var list = [
+							{ name: "John", age: "20", location: "Chicago" },
+							{ name: "Susan", age: "15", location: "LA" }
+						];
+					
+						this.tpl.personList({ persons: list });
+					}
+					
+					new Body();
+				</pre>
+				
+				그럼, 아래 예제를 통해 테스트 해보겠습니다. (<a href="http://app.inpost.kr/vojs/demo/exam2_1.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam2_1.html" style="width:100%; height:330px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+				</div>
+			</p>
+			
+			<h5>Advanced</h5>
+			<p>
+				하나의 템플릿을 적용할 영역이 한개가 아닌 다수일 경우에는 데이터 속성을 사용하지 않고, 적용할 대상 태그의 <code>id</code>를 설정합니다.
+				<pre class="brush: html;">
+					<table class="table table-bordered">
+				  		<thead>
+							<tr>
+								<th width="33%">Name</th>
+								<th width="33%">Age</th>
+								<th>Location</th>
+							</tr>
+						</thead>
+						<tbody id="personListTop">
+							<!-- include template -->
+						</tbody>
+					</table>
+					<table class="table table-bordered">
+				  		<thead>
+							<tr>
+								<th width="33%">Name</th>
+								<th width="33%">Age</th>
+								<th>Location</th>
+							</tr>
+						</thead>
+						<tbody id="personListBottom">
+							<!-- include template -->
+						</tbody>
+					</table>
+				</pre>
+				
+				템플릿 메소드의 매개변수 개수가 두 개일 경우, 첫번째 매개변수는 템플릿에 적용되는 객체가 아닌 적용할 태그의 ID 값이 됩니다.
+				<pre class="brush: js;">
+					function update(type) {
+						var id = (type == "top") ? "personListTop" : "personListBottom";
+	    				obj.tpl.personList(id, { persons: list });
+    				}
+				</pre>
+				
+				그럼, 아래 예제를 통해 테스트 해보겠습니다. (<a href="http://app.inpost.kr/vojs/demo/exam2_2.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam2_2.html" style="width:100%; height:330px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+				</div>
+			</p>
+			<!--// Template -->
+			
+			<div class="blank"></div>
+		</div>
+		
+		<div class="section">
+			<h3>Other features</h3>
+			
+			<h5>Search</h5>
+			<p>
+				템플릿을 제외한 나머지 구성 요소들은 기본적으로 <code>get</code>과 <code>val</code> 메소드를 가지고 있습니다. 두 메소드는 해당 데이터 속성을 지정한 뷰를 검색하여 가져올 수 있는 기능을 제공합니다. 
+				차이가 있다면 <code>get</code>은 엘리먼트 객체를 가져오고, <code>val</code>은 해당 엘리먼트의 내용(<code>innerHTML</code> 또는 <code>value</code>)을 가져옵니다.
+				<br>
+				
+				<pre class="brush: html;">
+					<div data-tag="person">
+						<input type="text" value="Moon-Hak-I" data-bind="name:info">
+						<input type="text" value="27" data-bind="age:info">
+						<input type="text" value="Seoul" data-bind="location:info">
+						
+						<a href="#" class="btn" data-act="submit">Submit</a>
+					</div>
+				</pre>
+				
+				아래 코드에서 <code>elem</code> 변수는 <code>submit</code>의 이름을 가진 태그 객체이며, <code>data</code> 변수는 해당 태그의 내용인 문자열 <code>Submit</code>을 가지게 됩니다.
+				<pre class="brush: js;">
+					var elem = obj.act.get("submit"),
+						data = obj.act.val("submit");
+				</pre>
+			
+				<code>Key</code>가 존재하는 뷰일 경우에는 해당 <code>Key</code>를 가지는 요소들의 집합인 객체로 가져오게 됩니다. (배열 형태)
+				<pre class="brush: js;">
+					var elemList = obj.bind.get("info"),
+						dataList = obj.bind.val("info");
+					
+					alert(
+						elemList["name"].value + ", " + 
+						elemList["age"].value + ", " + 
+						elemList["location"].value
+					);
+					
+					alert(
+						dataList["name"] + ", " + 
+						dataList["age"] + ", " + 
+						dataList["location"]
+					);
+				</pre>
+				
+				그럼, 아래 예제를 통해 테스트 해보겠습니다. (<a href="http://app.inpost.kr/vojs/demo/exam7.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam7.html" style="width:100%; height:220px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+			</p>
+			
+			<h5>vo.includeTpl</h5>
+			<p>
+				HTML 코드가 너무 많아서 이를 파일로 나누어 관리를 하고 싶을 때, 해당 파일들을 로드하여 현재의 문서에 포함시켜주는 기능을 제공하는 메소드입니다.
+				
+				<pre class="brush: js;">
+					vo.includePath = "view";
+					vo.includeExt = "tpl";
+										
+					vo.includeTpl("fileName1", "fileName2");
+				</pre>
+				<pre class="brush: js;">
+					vo.includeTpl("fileName1", "fileName2", { path: "view", ext: "tpl" });
+				</pre>
+				
+				위의 두 코드는 동일한 기능을 수행하는데, <code>fileName1</code>과 <code>fileName2</code> 파일의 내용을 동적으로 <code>body</code> 태그 안에 포함시킵니다. 
+				먼저 옵션에 대한 설명을 하자면 <code>path</code>는 로드 파일이 존재하는 폴더의 경로이며, <code>tpl</code>은 로드 파일의 확장자입니다. (<a href="http://app.inpost.kr/vojs/demo/exam3_1.html" target="_blank">Link</a>)
+				<br><br>
+				
+				그리고 <code>body</code>가 아닌 임의의 <code>id</code>를 가진 태그에 파일을 로드하는 기능도 제공합니다.
+				아래는 <code>test1</code>과 <code>test2</code>라는 <code>id</code>를 가진 태그에 해당 파일을 로드하는 코드입니다. (<a href="http://app.inpost.kr/vojs/demo/exam3_1.html" target="_blank">Link</a>)
+				<pre class="brush: js;">
+					vo.includeTpl("test1:fileName1", "test2:fileName2");
+				</pre>
+			</p>
+		</div>
+		
+		<div class="section">
+			<h3>Demo</h3>
+			
+			<p>
+				아래 링크를 클릭하면 앞서 보여드린 모든 예제들을 테스트 할 수 있습니다. 참고로 웹 기반의 FTP 클라이언트인 <code>wFTP</code>도 <code>vojs</code> 기반으로 만들어졌으니 같이 참고하시면 됩니다. (<a href="http://app.inpost.kr/wftp/" target="_blank">Link</a>)
+				<a href="http://app.inpost.kr/vojs/demo/index.html" target="_blank"><img src="http://static.inpost.kr/post/wftp/intro/demo.png" style="width:100%; height: 200px;" /></a>
+			</p>
+		</div>
+		
+		<div class="section">
+			<h3>Comments</h3>
+			<p>
+				<div class="fb-like" data-href="http://seogi1004.github.com/vojs/index.html" data-send="true" data-width="800" data-show-faces="true"></div>
+				<div class="fb-comments" data-href="http://seogi1004.github.com/vojs/index.html" data-num-posts="10" data-width="800"></div>
+			</p>
+		</div>
+	</section>
+
+	<aside id="sidebar">
+		<a href="https://github.com/seogi1004/vojs/zipball/master" class="button"> <small>Download</small> .zip file </a>
+		<a href="https://github.com/seogi1004/vojs/tarball/master" class="button"> <small>Download</small> .tar.gz file </a>
+
+		<p class="repo-owner">
+			<a href="https://github.com/seogi1004/vojs"></a> is maintained by <a href="https://github.com/seogi1004">seogi1004</a>.
+		</p>
+
+		<p>
+			This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+		</p>
+	</aside>
 </div>
+</div>
+
+<script>
+SyntaxHighlighter.autoloader.apply(null, path(
+	'css                    @shBrushCss.js',
+	'bash shell             @shBrushBash.js',
+	'js jscript javascript  @shBrushJScript.js',
+	'php                    @shBrushPhp.js',
+	'text plain             @shBrushPlain.js',
+	'sql                    @shBrushSql.js',
+	'xml xhtml xslt html    @shBrushXml.js'
+));
+</script>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=202014293252285";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 </body>
 </html>
