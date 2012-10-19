@@ -1,3 +1,5 @@
+/*! vojs v@1.1.0 | seogi1004.github.com/vojs */
+
 (function(experts) {
 	var ViewObject = function(id) {
 		var	self 		= this;
@@ -106,7 +108,7 @@
 				
 				//-- command type가 있을 경우, 예외처리
 				if(command.type) { 
-					throw new Error("VOJS_TAG_ERR: invalid expression"); return; 
+					throw new Error("VOJS_TAG_ERR: invalid expression"); 
 				}
 				
 				// data-tag 태그가 없고, id일 경우
@@ -138,8 +140,8 @@
 		function initTpl(root) {
 			root.find("script[type*=template]").each(function(i) {
 				var $this	= $(this),
-					$cont	= root.find("[data-tpl=" + this.id + "]"),
-					id		= this.id;
+					id		= (this.id) ? this.id : $(this).data("tpl" ),
+					$cont	= root.find("[data-tpl=" + id + "]");
 				
 				var tplFunc = function() {
 					var sel	= $cont,
@@ -167,7 +169,7 @@
 					return sel.get(0);
 				}
 				
-				eval("self.tpl." + this.id + " = tplFunc;");
+				eval("self.tpl." + id + " = tplFunc;");
 			});
 		}
 		
@@ -400,8 +402,42 @@
 		init();
 	}
 	
+	var getTplView = function(obj, tplId, opts) {
+		if(typeof(tplId) != 'string') throw new Error("VOJS_CRITICAL_ERR: is not an tplId");
+		
+		var tpl = $("#" + tplId);
+		if(tpl.attr("type") != "text/template") throw new Error("VOJS_CRITICAL_ERR: is not a template tag");
+		
+		var viewId = "_" + new Date().getTime() + "_",
+			tplHtml = _.template(tpl.html(), _.extend({ viewId: viewId }, (opts && opts.params) ? opts.params : { })),
+			targetSel = (opts && opts.targetId) ? $("#" + opts.targetId) : $("body");
+		
+		if(tplHtml.indexOf("<script") != -1) throw new Error("VOJS_CRITICAL_ERR: script tag should not be used");
+		if(targetSel.size() == 0) throw new Error("VOJS_CRITICAL_ERR: the target does not exist");
+			
+		return {
+			viewId: viewId, targetSel: targetSel, tplHtml: tplHtml
+		};
+	}
+	
 	ViewObject.applyTo = function(obj, id) {
+		if(typeof(obj) != 'object') throw new Error("VOJS_CRITICAL_ERR: is not an object");
+		
 		_.extend(obj, new ViewObject(id));
+	}
+	
+	ViewObject.appendTo = function(obj, tplId, opts) {
+		var res = getTplView(obj, tplId, opts);
+		
+		res.targetSel.append(res.tplHtml);	
+		ViewObject.applyTo(obj, res.viewId);
+	}
+	
+	ViewObject.prependTo = function(obj, tplId, opts) {
+		var res = getTplView(obj, tplId, opts);
+		
+		res.targetSel.prepend(res.tplHtml);	
+		ViewObject.applyTo(obj, res.viewId);
 	}
 	
 	ViewObject.includeTpl = function() {

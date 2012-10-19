@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="../core/jquery-min.js"></script>
+<script src="../core/underscore-min.js"></script>
+<script src="../vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>body { padding: 20px; }</style>
+
+<script>
+	var Person = function(name, age) {
+		vo.prependTo(this, 'test');
+		
+		this.bind.name(name);
+		this.bind.age(age);
+	}
+
+    $(function() {
+		var per1 = new Person("Hong", 27),
+			per2 = new Person("Yoon", 20);
+			
+		setTimeout(function() {
+			per1.bind.name("Hong2");
+			per1.bind.age(29);
+		},5000);
+	});
+</script>
+</head>
+<body>
+
+<script id="test" type="text/template">
+	<div id="<%= viewId %>">
+		<span data-bind="name"></span> | <span data-bind="age"></span>
+	</div>
+</script>
+</body>
+</html>
