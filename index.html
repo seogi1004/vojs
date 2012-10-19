@@ -162,7 +162,7 @@
 				HTML 태그는 데이터 속성을 가질 수 있는데, 해당 속성의 기본적인 규칙은 다음과 같습니다.<br>
 				
 				<pre class="brush: html;">
-					<element data-xxx="key:name#type">Value</element>
+					<element data-xxx="name:key#type">Value</element>
 				</pre>
 				
 				HTML 태그가 가지는 데이터 속성 종류는 아래 표와 같습니다.
@@ -261,9 +261,9 @@
 				만약에 뷰 속성에 <code>key</code>가 있다면 해당 태그는 단일 객체가 아니고, <code>key</code>가 존재하는 배열 형태의 객체가 됩니다. 
 				
 				<pre class="brush: html;">
-					<input type="text" data-tag="name:info" />
-					<input type="text" data-tag="age:info" />
-					<input type="text" data-tag="location:info" />
+					<input type="text" data-tag="info:name" />
+					<input type="text" data-tag="info:age" />
+					<input type="text" data-tag="info:location" />
 				</pre>
 				
 				이렇게 <code>key</code>를 지정함으로써 <code>info</code>이라는 객체의 맴버들로 해당 폼 태그를 좀 더 구조적으로 가져올 수 있습니다.
@@ -318,8 +318,8 @@
 				<code>vojs</code>의 뷰 속성에는 <code>key</code> 값을 넣어서 동일한 이름의 요소를 구분하여 사용할 수 있습니다.
 				
 				<pre class="brush: html;">
-					<a href="#" data-act="1:start">Start 1</a>
-					<a href="#" data-act="2:start">Start 2</a>
+					<a href="#" data-act="start:1">Start 1</a>
+					<a href="#" data-act="start:2">Start 2</a>
 				</pre>
 				
 				<code>Start</code> 링크를 클릭하면, <code>Body</code> 클래스에 정의된 <code>start</code>메소드가 호출되며 해당 뷰 속성에 정의된 <code>key</code> 값을 두번째 매개변수로 받을 수 있습니다.
@@ -401,13 +401,13 @@
 				참고로 이 예제는 프로그레스 바를 각각의 별도의 뷰-오브젝트로 설정하여 구현한 것입니다. 이를 하나의 뷰-오브젝트로 설정하고, 각각의 프로그레스 바를 <code>key</code>로 구분하여 만들 수도 있습니다.
 				<pre class="brush: html;">
 					<div class="progress progress-primary">
-						<div class="bar" style="width: 0%" data-bind="blue:percent#width"></div>
+						<div class="bar" style="width: 0%" data-bind="percent:blue#width"></div>
 					</div>
 					<div class="progress progress-success">
-						<div class="bar" style="width: 0%" data-bind="green:percent#width"></div>
+						<div class="bar" style="width: 0%" data-bind="percent:green#width"></div>
 					</div>
 					<div class="progress progress-danger">
-						<div class="bar" style="width: 0%" data-bind="red:percent#width"></div>
+						<div class="bar" style="width: 0%" data-bind="percent:red#width"></div>
 					</div>
 				</pre>
 				
@@ -544,9 +544,9 @@
 				
 				<pre class="brush: html;">
 					<div data-tag="person">
-						<input type="text" value="Moon-Hak-I" data-bind="name:info">
-						<input type="text" value="27" data-bind="age:info">
-						<input type="text" value="Seoul" data-bind="location:info">
+						<input type="text" value="Moon-Hak-I" data-bind="info:name">
+						<input type="text" value="27" data-bind="info:age">
+						<input type="text" value="Seoul" data-bind="info:location">
 						
 						<a href="#" class="btn" data-act="submit">Submit</a>
 					</div>
