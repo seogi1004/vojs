@@ -5,7 +5,7 @@
 		<td><%= persons[i].name %></td>
 		<td><%= persons[i].age %></td>
 		<td><%= persons[i].location %></td>
-		<td><button class="btn btn-mini" type="button" data-act="<%= i %>:deletePerson" data-type="<%= type %>">Delete</button></td>
+		<td><button class="btn btn-mini" type="button" data-act="deletePerson:<%= i %>" data-type="<%= type %>">Delete</button></td>
 	</tr>
 	<% } %>
 </script>

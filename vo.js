@@ -182,20 +182,20 @@
 			var key = null, func = null, type = null;
 			
 			if(command) {
+				// type이 있을 경우,
+				if(command.indexOf('#') != -1) {
+					var arr = command.split("#");
+						type = arr[1],
+						command = arr[0];
+				}
+				
 				// key가 있을 경우,
 				if(command.indexOf(':') != -1) {
 					var arr = command.split(":");
-						key = arr[0], 
-						func = arr[1];
+						key = arr[1], 
+						func = arr[0];
 				} else {
 					func = command;
-				}
-				
-				// type이 있을 경우,
-				if(func.indexOf('#') != -1) {
-					var arr = func.split("#");
-						func = arr[0],
-						type = arr[1];
 				}
 			}
 				

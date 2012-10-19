@@ -32,19 +32,19 @@
 </head>
 <body>
 	<div class="progress progress-primary">
-		<div class="bar" style="width: 0%" data-bind="blue:percent#width"></div>
+		<div class="bar" style="width: 0%" data-bind="percent:blue#width"></div>
 	</div>
 	<div class="progress progress-success">
-		<div class="bar" style="width: 0%" data-bind="green:percent#width"></div>
+		<div class="bar" style="width: 0%" data-bind="percent:green#width"></div>
 	</div>
 	<div class="progress progress-danger">
-		<div class="bar" style="width: 0%" data-bind="red:percent#width"></div>
+		<div class="bar" style="width: 0%" data-bind="percent:red#width"></div>
 	</div>
 	
 	<div class="btn-group">
-		<button class="btn" data-act="blue:start">Blue</button>
-		<button class="btn" data-act="green:start">Green</button>
-		<button class="btn" data-act="red:start">Red</button>
+		<button class="btn" data-act="start:blue">Blue</button>
+		<button class="btn" data-act="start:green">Green</button>
+		<button class="btn" data-act="start:red">Red</button>
 	</div>
 </body>
 </html>

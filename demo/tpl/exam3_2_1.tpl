@@ -8,19 +8,19 @@
 		<div class="control-group">
             <label class="control-label" for="input01">Name</label>
             <div class="controls">
-				<input type="text" class="input-xlarge" data-tag="name:person">
+				<input type="text" class="input-xlarge" data-tag="person:name">
             </div>
 		</div>
 		<div class="control-group">
             <label class="control-label" for="input01">Age</label>
             <div class="controls">
-				<input type="text" class="input-xlarge" data-tag="age:person">
+				<input type="text" class="input-xlarge" data-tag="person:age">
             </div>
 		</div>
 		<div class="control-group">
             <label class="control-label" for="input01">Location</label>
             <div class="controls">
-				<input type="text" class="input-xlarge" data-tag="location:person">
+				<input type="text" class="input-xlarge" data-tag="person:location">
             </div>
 		</div>
 	</fieldset>
@@ -28,6 +28,6 @@
 </div>
 <div class="modal-footer">
     <a href="#" class="btn" data-dismiss="modal">Close</a>
-    <a href="#" class="btn btn-primary" data-act="top:addPerson">Add Top</a>
-    <a href="#" class="btn btn-primary" data-act="bottom:addPerson">Add Bottom</a>
+    <a href="#" class="btn btn-primary" data-act="addPerson:top">Add Top</a>
+    <a href="#" class="btn btn-primary" data-act="addPerson:bottom">Add Bottom</a>
 </div>

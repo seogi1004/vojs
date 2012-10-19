@@ -72,19 +72,19 @@
 				<div class="control-group">
 		            <label class="control-label" for="input01">Name</label>
 		            <div class="controls">
-						<input type="text" class="input-xlarge" data-tag="name:person">
+						<input type="text" class="input-xlarge" data-tag="person:name">
 		            </div>
 				</div>
 				<div class="control-group">
 		            <label class="control-label" for="input01">Age</label>
 		            <div class="controls">
-						<input type="text" class="input-xlarge" data-tag="age:person">
+						<input type="text" class="input-xlarge" data-tag="person:age">
 		            </div>
 				</div>
 				<div class="control-group">
 		            <label class="control-label" for="input01">Location</label>
 		            <div class="controls">
-						<input type="text" class="input-xlarge" data-tag="location:person">
+						<input type="text" class="input-xlarge" data-tag="person:location">
 		            </div>
 				</div>
 			</fieldset>
@@ -103,7 +103,7 @@
 			<td><%= persons[i].name %></td>
 			<td><%= persons[i].age %></td>
 			<td><%= persons[i].location %></td>
-			<td><button class="btn btn-mini" type="button" data-act="<%= i %>:deletePerson">Delete</button></td>
+			<td><button class="btn btn-mini" type="button" data-act="deletePerson:<%= i %>">Delete</button></td>
 		</tr>
 		<% } %>
 	</script>
