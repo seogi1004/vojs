@@ -437,8 +437,8 @@
 				템플릿은 테이블이나 리스트 형태의 데이터를 출력하는 UI에 사용하면 매우 편리합니다. 템플릿을 사용하기 위해서는 <code>body</code> 태그 안에 템플릿 코드가 포함되어 있는 
 				<code>&lt;script data-tpl='viewId:tplName' type='text/template'&gt;&lt;/script&gt;</code>를 정의하면 됩니다.<br><br>
 				
-				<code>viewId</code>를 설정하지 않으면 기본적으로 해당 템플릿이 속한 뷰-오브젝트는 <code>body</code>가 됩니다. 		
-				그럼, 먼저 <code>body</code>라는 ID 값을 가지는 뷰-오브젝트에서 사용할 수 있는 <code>personList</code> 템플릿을 정의합니다.
+				<code>viewId</code>를 설정하지 않으면 기본적으로 해당 템플릿이 속한 뷰는 <code>body</code>가 됩니다. 		
+				그럼, 먼저 <code>body</code>라는 ID 값을 가지는 뷰에서 사용할 수 있는 <code>personList</code> 템플릿을 정의합니다.
 				<pre class="brush: html;">
 					&lt;script data-tpl="body:personList" type="text/template"&gt;
 						&lt;% for(var i in persons) { %&gt;
