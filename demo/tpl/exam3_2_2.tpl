@@ -1,5 +1,5 @@
 <!-- Template, Person List -->
-<script id="personList" type="text/template">
+<script data-tpl="personList" type="text/template">
 	<% for(var i in persons) { %>
 	<tr>
 		<td><%= persons[i].name %></td>

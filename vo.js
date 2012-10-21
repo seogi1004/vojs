@@ -119,7 +119,7 @@
 				
 				// id는 멀티를 지원하지 않음
 				if(tmp_func.indexOf(':') == -1 || isId) {
-					eval("self.tag." + tmp_func + " = $this.get(0);");
+					self.tag[tmp_func] = $this.get(0);
 				} else {
 					funcList.push({ func: command.func, key: command.key, data: $this.get(0) });
 				}
@@ -138,10 +138,23 @@
 		}
 		
 		function initTpl(root) {
-			root.find("script[type*=template]").each(function(i) {
-				var $this	= $(this),
-					id		= (this.id) ? this.id : $(this).data("tpl" ),
-					$cont	= root.find("[data-tpl=" + id + "]");
+			$("body").find("script[type*=template]").each(function(i) {
+				var key		= $(this).data("tpl" ),
+					viewSel	= "body",
+					id 		= "";
+					
+				if(!key) return;
+				
+				if(key.indexOf(":") == -1) { 
+					id = key;
+				} else {
+					var tmpArr  = key.split(":"),
+						viewSel = "#" + tmpArr[0],
+						id 		= tmpArr[1];	
+				}
+					
+				var $cont	 = $(viewSel).find("[data-tpl=" + id + "]"),
+					$tplHtml = $(this).html();
 				
 				var tplFunc = function() {
 					var sel	= $cont,
@@ -155,7 +168,7 @@
 					}
 					
 					//  tpl 갱신
-					sel.html(_.template($this.html(), obj));
+					sel.html(_.template($tplHtml, obj));
 					
 					// bind/tag 갱신
 					initBind(sel);
@@ -169,7 +182,7 @@
 					return sel.get(0);
 				}
 				
-				eval("self.tpl." + id + " = tplFunc;");
+				self.tpl[id] = tplFunc;
 			});
 		}
 		
