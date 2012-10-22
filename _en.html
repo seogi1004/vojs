@@ -50,7 +50,7 @@
 <body>
 <header>
 	<div class="inner">
-		<h1>View Object</h1>
+		<h1>vo.js</h1>
 		<h2></h2>
 		<a href="https://github.com/seogi1004/vojs" class="button"><small>View project on</small>GitHub</a>
 	</div>
@@ -197,7 +197,7 @@
 			
 			<h5>Object Setting</h5>
 			<p>
-				뷰-오브젝트를 적용하는 <code>vo.applyTo(object, [element id])</code> 메소드의 <code>id</code>를 지정하지 않으면 기본적으로 <code>body</code> 태그를 해당 객체의 뷰로 설정합니다.
+				뷰-오브젝트를 적용하는 <code>vo.applyTo(object, [element id])</code> 메소드의 <code>element id</code>를 지정하지 않으면 기본적으로 <code>body</code> 태그를 해당 객체의 뷰로 설정합니다.
 				<br><br>
 				
 				객체에 뷰-오브젝트를 적용하는 방법은 다양합니다. 먼저 아래는 일반적으로 사용하는 클래스 내부에 설정하는 방법이며 뷰-오브젝트를 적용할 객체가 여러 개일 경우에 사용합니다. 
@@ -588,7 +588,7 @@
 				</div>
 			</p>
 			
-			<h5>vo.includeTpl</h5>
+			<h5>Include File</h5>
 			<p>
 				HTML 코드가 너무 많아서 이를 파일로 나누어 관리를 하고 싶을 때, 해당 파일들을 로드하여 현재의 문서에 포함시켜주는 기능을 제공하는 메소드입니다.
 				
@@ -611,6 +611,52 @@
 				<pre class="brush: js;">
 					vo.includeTpl("test1:fileName1", "test2:fileName2");
 				</pre>
+			</p>
+			
+			<h5>View-Template</h5>
+			<p>
+				뷰-오브젝트를 생성하기 위해서는 뷰로 지정할 태그가 <code>body</code> 안에 있어야 합니다. 하지만 뷰-오브젝트가 동적으로 여러 개가 생성되야 하는 경우에는 
+				별도로 뷰-오브젝트의 뷰로 지정될 태그를 추가해줘야 합니다. 하지만 뷰-템플릿을 사용하면 보다 쉽게 뷰-오브젝트를 동적으로 생성할 수 있습니다.<br>
+				<br>
+				먼저 뷰-오브젝트가 추가될 태그를 <code>body</code> 안에 생성합니다.
+				<pre class="brush: html;">
+					&lt;body&gt;
+						<div id="body"><!-- append to view-template --></div>
+						<button class="btn-large btn-primary" onclick="create()">Create</button>
+						
+						&lt;script id="tpl_prog" type="text/template"&gt;
+							<!-- View-Template -->
+						&lt;/script&gt;
+					&lt;/body&gt;
+				</pre>
+				
+				그리고 뷰-템플릿을 생성합니다. 참고로 최상위 태그의 ID 값에는 <code>&lt;%= viewId %&gt;</code>를 필수적으로 입력해야 합니다.
+				<pre class="brush: html;">
+					&lt;script id="tpl_prog" type="text/template"&gt;
+						<div id="<%= viewId %>" class="row">
+							<div class="progress progress-info">
+								<div class="bar" style="width: 0%" data-bind="percent#width"></div>
+							</div>
+							<button class="btn-small" data-act="start">Start</button>
+						</div>
+					&lt;/script&gt;
+				</pre>
+				
+				마지막으로 <code>vo.applyTo(object, [element id])</code> 메소드 대신 <code>vo.appendTo(object, template id, [target id])</code>를 사용하여 해당 객체를 뷰-오브젝트로 추가합니다. 
+				참고로 <code>target id</code>는 뷰-오브젝트를 추가할 대상 태그의 ID인데, 값이 없다면 <code>body</code> 태그가 기본적으로 설정됩니다.
+				<pre class="brush: js;">
+					var Body = function() {
+						vo.appendTo(this, 'tpl_prog', 'body');
+						// vo.prependTo(this, 'tpl_prog', 'body');
+					}
+					
+					new Body();
+				</pre>
+			
+				아래는 뷰-템플릿을 활용하여 프로그레스 바를 동적으로 생성할 수 있도록 구현한 예제입니다. (<a href="http://app.inpost.kr/vojs/demo/exam8.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam8.html" style="width:100%; height:300px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+				</div>
 			</p>
 		</div>
 		
