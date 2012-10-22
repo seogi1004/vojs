@@ -7,33 +7,54 @@
 
 <link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
 <script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
-<style>body { padding: 20px; }</style>
+<style>
+	body { padding: 20px; }
+	#body { margin-bottom: 15px; }
+	.row { background-color: #dcdcdc; margin-bottom: 20px; }
+	.progress { margin-bottom: 10px; }
+</style>
 
 <script>
-	var Person = function(name, age) {
-		vo.prependTo(this, 'test');
+	var Progress = function() {
+		vo.appendTo(this, 'tpl_prog', { targetId: "body" });
 		
-		this.bind.name(name);
-		this.bind.age(age);
-	}
-
-    $(function() {
-		var per1 = new Person("Hong", 27),
-			per2 = new Person("Yoon", 20);
+		var percent = 0;
+		var bind = this.bind,
+			act = this.act;
 			
-		setTimeout(function() {
-			per1.bind.name("Hong2");
-			per1.bind.age(29);
-		},5000);
-	});
+		function run() {
+    		if(percent < 100) {
+	        	percent += 5;
+	        	bind.percent(percent + "%");
+	        	
+	        	setTimeout(run, 100);
+	    	}
+    	}
+    	
+		act.start = function(e) {
+			$(e.target).remove();
+			run();
+		}
+	}
+	
+	function create() {
+		new Progress();
+	}
 </script>
 </head>
 <body>
 
-<script id="test" type="text/template">
-	<div id="<%= viewId %>">
-		<span data-bind="name"></span> | <span data-bind="age"></span>
+<div id="body"><!-- append to view-template --></div>
+<button class="btn-large btn-primary" onclick="create()">Create</button>
+
+<script id="tpl_prog" type="text/template">
+	<div id="<%= viewId %>" class="row">
+		<div class="progress progress-info">
+			<div class="bar" style="width: 0%" data-bind="percent#width"></div>
+		</div>
+		<button class="btn-small" data-act="start">Start</button>
 	</div>
 </script>
+
 </body>
 </html>
