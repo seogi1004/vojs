@@ -415,15 +415,17 @@
 		init();
 	}
 	
-	var getTplView = function(obj, tplId, opts) {
-		if(typeof(tplId) != 'string') throw new Error("VOJS_CRITICAL_ERR: is not an tplId");
+	var getTplView = function(obj, tplId, targetId) {
+		if(typeof(obj) != 'object') throw new Error("VOJS_CRITICAL_ERR: is not an object");
+		if(typeof(tplId) != 'string') throw new Error("VOJS_CRITICAL_ERR: is not an template id");
+		if(typeof(targetId) != 'string') throw new Error("VOJS_CRITICAL_ERR: is not an target id");
 		
 		var tpl = $("#" + tplId);
 		if(tpl.attr("type") != "text/template") throw new Error("VOJS_CRITICAL_ERR: is not a template tag");
 		
 		var viewId = "_" + new Date().getTime() + "_",
-			tplHtml = _.template(tpl.html(), _.extend({ viewId: viewId }, (opts && opts.params) ? opts.params : { })),
-			targetSel = (opts && opts.targetId) ? $("#" + opts.targetId) : $("body");
+			tplHtml = _.template(tpl.html(), { viewId: viewId }),
+			targetSel = (targetId) ? $("#" + targetId) : $("body");
 		
 		if(tplHtml.indexOf("<script") != -1) throw new Error("VOJS_CRITICAL_ERR: script tag should not be used");
 		if(targetSel.size() == 0) throw new Error("VOJS_CRITICAL_ERR: the target does not exist");
@@ -439,15 +441,15 @@
 		_.extend(obj, new ViewObject(id));
 	}
 	
-	ViewObject.appendTo = function(obj, tplId, opts) {
-		var res = getTplView(obj, tplId, opts);
+	ViewObject.appendTo = function(obj, tplId, targetId) {
+		var res = getTplView(obj, tplId, targetId);
 		
 		res.targetSel.append(res.tplHtml);	
 		ViewObject.applyTo(obj, res.viewId);
 	}
 	
-	ViewObject.prependTo = function(obj, tplId, opts) {
-		var res = getTplView(obj, tplId, opts);
+	ViewObject.prependTo = function(obj, tplId, targetId) {
+		var res = getTplView(obj, tplId, targetId);
 		
 		res.targetSel.prepend(res.tplHtml);	
 		ViewObject.applyTo(obj, res.viewId);
