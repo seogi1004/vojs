@@ -18,20 +18,19 @@
 	var Progress = function() {
 		vo.appendTo(this, 'tpl_prog', { targetId: "body" });
 		
-		var percent = 0;
-		var bind = this.bind,
-			act = this.act;
+		var self = this,
+			percent = 0;
 			
 		function run() {
     		if(percent < 100) {
 	        	percent += 5;
-	        	bind.percent(percent + "%");
+	        	self.bind.percent(percent + "%");
 	        	
 	        	setTimeout(run, 100);
 	    	}
     	}
     	
-		act.start = function(e) {
+		self.act.start = function(e) {
 			$(e.target).remove();
 			run();
 		}
