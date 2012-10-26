@@ -97,7 +97,7 @@
 			<h3>Concept</h3>
 						
 			<p>
-				뷰-오브젝트는 웹 페이지에서 뷰가 되는 HTML 태그와 뷰를 구성하는 데이터, 즉 '뷰와 객체는 동일하다'라는 것이 기본 컨셉입니다. 먼저 아래 HTML 코드를 보도록 하겠습니다.<br/>
+				The View-Object's basic concept is 'View and the object is the same'. Let's look at the HTML code below.<br/>
 				<pre class="brush: html;">
 					&lt;tr id="person1"&gt;
 						&lt;td data-bind="name"&gt;&lt;/td&gt;
@@ -111,7 +111,7 @@
 					&lt;/tr&gt;
 				</pre>
 				
-				위의 HTML 코드는 <code>person1</code>과 <code>person2</code>의 이름과 나이를 보여주는 뷰입니다. 그리고 HTML 태그와 매칭할 객체의 클래스를 정의하도록 하겠습니다.<br/>
+				HTML code above is view showing the name and age. and HTML tags and matching, let's define the class of an object.<br/>
 				<pre class="brush: js;">
 					var Person = function(id, name, age) {
 						vo.applyTo(this, id);
@@ -130,38 +130,38 @@
 					};
 				</pre>
 				
-				<code>Person</code>이라는 클래스를 만들었으니 HTML 태그에서 ID 값이 <code>person1</code>, <code>person2</code>인 뷰의 객체를 생성하겠습니다.
+				Created a class called <code>Person</code>. HTML 태그에서 ID 값이 <code>person1</code>, <code>person2</code> view of the object ID value is generated.
 				<pre class="brush: js;">
 					var person1 = new Person("person1", "James", 21),
 	    				person2 = new Person("person2", "Thomas", 15);
 				</pre>
 				
-				<code>James</code>와 <code>Thomas</code>라는 이름을 가진 객체를 생성하였다면, 아래와 같은 예제가 실행됩니다. (<a href="http://app.inpost.kr/vojs/demo/exam1_4.html" target="_blank">Link</a>)
+				If you create an object named <code>James</code> and <code>Thomas</code>, the following example is run. (<a href="http://app.inpost.kr/vojs/demo/exam1_4.html" target="_blank">Link</a>)
 				<div class="example">
 					<iframe src="http://app.inpost.kr/vojs/demo/exam1_4.html" style="width:100%; height:142px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 				
-				<code>Add 1-year</code> 버튼을 클릭하면 대상의 나이가 증가합니다. 먼저 <code>Person</code>클래스의 2라인에서 호출된 <code>vo.applyTo(this, id);</code> 코드는 
-				객체가 생성이 될 때, 해당 객체의 뷰를 전달 받은 ID 값의 HTML 태그로 설정합니다. 뷰가 설정이 되면 객체는 동적으로 뷰를 변경할 수 있습니다. <br/><br/>
+				When you click the button <code>Add 1-year</code> with increasing age of the target. Object is created when the first call on line 2 of the Person class 'vo.applyTo (this, id);' code,  
+				the received view of the object ID is set to the value of the HTML tags. View is set, the object can dynamically change the view.<br/><br/>
 				
-				뷰의 데이터 속성을 <code>data-bind</code>로 설정을 하면, 해당 뷰를 포함하고 있는 객체는 <code>bind.name</code> 메소드를 가지게 됩니다. 
-				그리고 <code>self.bind.name(self.name);</code>과 같이 호출하면 뷰의 내용이 변경됩니다.
+				If the view of the data attribute set to <code>data-bind</code>, Object that contains the view have <code>bind.name</code> method.
+				And <code> self.bind.name (self.name);</code> and if you call the contents of the view changes.
 				<br><br>
 					
-				참고로 이러한 규칙은 <code>bind</code> 외 다른 요소들도 동일하게 적용됩니다. 
+				Note that these rules <code>bind</code> other elements of the same applies.
 			</p>
 		</div>
 		
 		<div class="section">
 			<h3>Component</h3>
 			<p>
-				<code>vojs</code>는 <code>Action</code>, <code>Binding</code>, <code>Template</code>, <code>Tag</code> 이렇게 총 4가지로 구성되어 있습니다. 
-				뷰-오브젝트를 적용하기 위해서는 먼저 HTML 태그에 각각의 구성 요소에 맞는 데이터 속성을 설정해야 합니다. 
+				<code>vojs</code> is consists of  <code>action</code>, <code>bind</code>, <code>template</code>, <code>tag</code>.
+				In order to apply the View-Object, first you must set the properties of each of the components fit the data to the HTML tag.
 			</p>
 			
 			<h5>View Setting</h5>
 			<p>
-				HTML 태그는 데이터 속성을 가질 수 있는데, 해당 속성의 기본적인 규칙은 다음과 같습니다.<br>
+				HTML tags can have properties. Corresponding properties of the basic rules are as follows:<br>
 				
 				<pre class="brush: html;">
 					<element data-xxx="name:key#type">Value</element>
