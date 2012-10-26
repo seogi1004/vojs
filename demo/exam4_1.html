@@ -113,7 +113,7 @@ $(function() {
 		</div>
 	</li>
 	
-	<script id="sliderList" type="text/template">
+	<script data-tpl="sliderList" type="text/template">
 		<% for(var i in imgList) { %>
 			<% if(imgList[i].url) { %>
 			<img src="<%= imgList[i].url %>" style="width: <%= width %>px; height: <%= height %>px; float: left;" />
