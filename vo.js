@@ -241,7 +241,7 @@
 					
 					if(arr[0] == "css") {
 						$(elem).css(arr[1], value);
-					} else if(arr[1] == "attr") {
+					} else if(arr[0] == "attr") {
 						$(elem).attr(arr[1], value);
 					}
 				} else {
