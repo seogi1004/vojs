@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<META name="Title" content="[JavaScript Library] - vojs demo">
+<META name="Description" content="JavaScript Library for UI development">
+<META name="Keywords" content="javascript,js,jquery,ui,underscore,mvvm,vo,view,object,view-object">
+<META name="Author" content="Moon-Hak-I">
+<META name="Reply-To(Email)" content="seogi1004@naver.com">
+<META name="Robots" content="ALL">
+<META name="Robots" content="index,follow">
+	
+<script src="../core/jquery-min.js"></script>
+<script src="../vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>
+	.ball { position: absolute; width: 30px; height: 30px; left: 30px; top: 30px; background-color: red; }
+</style>
+
+<script>
+	var pos = 30,
+		ball = { left : 30, top : 30 };
+		
+	$(function() {
+		vo.applyTo(ball);
+		
+		$(window).bind("keydown", function(e) {
+			// Left, Right
+			if (e.which == 37 || e.which == 39) {
+				ball.left += (e.which == 37) ? -pos : pos;
+				ball.bind.l_move(ball.left + "px");
+				
+			} 
+			
+			// Top, Bottom
+			if (e.which == 38 || e.which == 40) {
+				ball.top += (e.which == 38) ? -pos : pos;
+				ball.bind.t_move(ball.top + "px");
+			}
+		}); 
+	});
+</script>
+</head>
+<body>
+	<div class="ball" data-bind="l_move#left,t_move#top">&nbsp;</div>
+</body>
+</html>
