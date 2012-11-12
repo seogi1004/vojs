@@ -2,11 +2,12 @@
 
 (function(experts) {
 	var ViewObjectTpl = function(text, data, settings) {
-		var _ = {};
+		var _ = {},
+			breaker = {};
 	
-		var ArrayProto = Array.prototype;
-		var slice = ArrayProto.slice;
-		var nativeForEach = ArrayProto.forEach;
+		var ArrayProto = Array.prototype,
+			slice = ArrayProto.slice,
+			nativeForEach = ArrayProto.forEach;
 		
 		var escapes = {
 			'\\' : '\\',
@@ -20,9 +21,11 @@
 	
 		for (var p in escapes)
 		escapes[escapes[p]] = p;
-		var escaper = /\\|'|\r|\n|\t|\u2028|\u2029/g;
-		var unescaper = /\\(\\|'|r|n|t|u2028|u2029)/g;
-	
+		
+		var escaper = /\\|'|\r|\n|\t|\u2028|\u2029/g,
+			unescaper = /\\(\\|'|r|n|t|u2028|u2029)/g,
+			noMatch = /.^/;
+		
 		var unescape = function(code) {
 			return code.replace(unescaper, function(match, escape) {
 				return escapes[escape];
@@ -49,8 +52,6 @@
 			}
 		};
 	
-		var noMatch = /.^/;
-		
 		_.has = function(obj, key) {
 			return hasOwnProperty.call(obj, key);
 		};
@@ -183,13 +184,19 @@
 			
 			sel.each(function(i) {
 				var $this = $(this),
-					func = $this.data("bind"),
-					command = getParseCommand(func);
-				
-				if(!command.key) {
-					bindList.push({ name: command.func, elem: this });
-				} else {
-					funcList.push({ func: command.func, key: command.key, data: $this.get(0) });
+					tmpComm = $this.data("bind"),
+					tmpCommArr = getParseCommandArr(tmpComm);
+					
+				var commArr = (tmpCommArr.length > 0) ? tmpCommArr : [ tmpCommArr ];
+					
+				for(var j in commArr) {
+					var command = commArr[j];
+					
+					if(!command.key) {
+						bindList.push({ name: command.func, elem: this });
+					} else {
+						funcList.push({ func: command.func, key: command.key, data: $this.get(0) });
+					}
 				}
 				
 				if(sel.size() == i + 1) {
@@ -322,6 +329,23 @@
 			};
 		}
 		
+		function getParseCommandArr(command) {
+			if(command.indexOf(',') != -1) {
+				if(command.indexOf(':') != -1) throw new Error("VOJS_BIND_ERR: bind array keys can not be used");
+				
+				var arr = command.split(","),
+					commArr = new Array();
+				
+				for(var i in arr) {
+					commArr.push(getParseCommand(arr[i]));
+				}
+				
+				return commArr;
+			}
+			
+			return getParseCommand(command);
+		}
+		
 		/**
 		 * bind 태그일 경우, 
 		 * 엘리먼트 유형에 따라 처리하는 함수
@@ -329,26 +353,33 @@
 		 * @param {Element} elem
 		 * @param {String} value 
 		 */
-		function settingBindProc(elem, value) {
-			var command = getParseCommand($(elem).data("bind")),
-				type = command.type;
-				
-			if(!type) {
-				if(elem.value == undefined) 
-					$(elem).html(value);
-				else 			
-					$(elem).val(value);
-			} else {
-				if(type.indexOf(".") != -1) {
-					var arr = type.split(".");
+		function settingBindProc(func, elem, value) {
+			var tmpComm = $(elem).data("bind"),
+				tmpCommArr = getParseCommandArr(tmpComm),
+				commArr = (tmpCommArr.length > 0) ? tmpCommArr : [ tmpCommArr ];
+			
+			for(var i in commArr) {
+				if(commArr[i].func == func) {
+					var type = commArr[i].type;
 					
-					if(arr[0] == "css") {
-						$(elem).css(arr[1], value);
-					} else if(arr[0] == "attr") {
-						$(elem).attr(arr[1], value);
+					if(!type) {
+						if(elem.value == undefined) 
+							$(elem).html(value);
+						else 			
+							$(elem).val(value);
+					} else {
+						if(type.indexOf(".") != -1) {
+							var arr = type.split(".");
+							
+							if(arr[0] == "css") {
+								$(elem).css(arr[1], value);
+							} else if(arr[0] == "attr") {
+								$(elem).attr(arr[1], value);
+							}
+						} else {
+							$(elem).css(type, value);
+						}
 					}
-				} else {
-					$(elem).css(type, value);
 				}
 			}
 		}	
@@ -374,10 +405,10 @@
 					self.bindMultiProc = function(value) {
 						var elemList = list[func];
 						
-						for(var j in elemList) {
+						for(var j = 0; j < elemList.length; j++) {
 							var elem = elemList[j];
 							
-							settingBindProc(elem, value);
+							settingBindProc(func, elem, value);
 						}
 						
 						return (elemList.length > 1) ? elemList : elemList[0];
@@ -401,7 +432,7 @@
 				(function(func) {
 					self.funcMultiProc = function(key, value) {
 						var data = getFuncElem(funcList, func, key);
-						settingBindProc(data, value);
+						settingBindProc(func, data, value);
 						
 						return data;
 					};
@@ -484,16 +515,14 @@
 					var list = new Object(),
 						index = 0;
 					
-					for(var i in cmdList) {
-						if(typeof(cmdList[i]) != "function") {
-							var cmd = cmdList[i].cmd;
-							
-							if(cmd.key) { key = cmd.key; } 
-							else { key = index; index++; }
-							
-							if(is_elem) list[key] = cmdList[i].elem;
-							else list[key] = getData(cmdList[i]);
-						}
+					for(var i = 0; i < cmdList.length; i++) {
+						var cmd = cmdList[i].cmd;
+						
+						if(cmd.key) { key = cmd.key; } 
+						else { key = index; index++; }
+						
+						if(is_elem) list[key] = cmdList[i].elem;
+						else list[key] = getData(cmdList[i]);
 					}
 					
 					return list;
