@@ -433,6 +433,25 @@
 					<iframe src="http://app.inpost.kr/vojs/demo/exam1_2.html" style="width:100%; height:160px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 			</p>
+			
+			<h5>More Advanced</h5>
+			<p>
+				하나의 엘리먼트에 여러 개의 바인딩 메소드를 정의하고 싶다면, 아래와 같이 뷰 속성을 설정하면 됩니다.
+				<pre class="brush: html;">
+					<div class="ball" data-bind="l_move#left,t_move#top">&nbsp;</div>
+				</pre>
+				
+				<code>콤마(,)</code>를 사용하여 구분하며 하나의 엘리먼트에 여러 개의 바인딩 메소드를 정의할 수 있습니다. 일반적으로 두 가지 이상의 스타일 속성을 변경해야 할 때 사용합니다.
+				<pre class="brush: js;">
+					ball.bind.l_move(ball.left + "px"); // 좌우로 이동
+					ball.bind.t_move(ball.top + "px"); // 위아래로 이동
+				</pre>
+				
+				<code>l_move</code>/<code>t_move</code> 메소드가 호출되면 해당 뷰 속성의 옵션에 정의된 <code>css</code> 값이 변경됩니다. 아래 예제에 포커스를 넣고 키보드 방향키를 눌러보면 빨간색 네모 박스가 이동하는 것을 확인할 수 있습니다.
+				<div class="example">
+					<iframe src="http://app.inpost.kr/vojs/demo/exam1_5.html" style="width:100%; height:200px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+			</p>
 			<!--// Binding -->
 			
 			<div class="blank"></div>
@@ -440,8 +459,7 @@
 			<!-- Template -->
 			<h4>Template</h4>
 			<p>
-				<code>vojs</code>는 <a href="hhttp://documentcloud.github.com/underscore/" target="_blank">Underscore.js</a> 기반의 템플릿 엔진을 지원합니다. 
-				템플릿은 테이블이나 리스트 형태의 데이터를 출력하는 UI에 사용하면 매우 편리합니다. 템플릿을 사용하기 위해서는 <code>body</code> 태그 안에 템플릿 코드가 포함되어 있는 
+				<code>vojs</code>의 템플릿은 테이블이나 리스트 형태의 데이터를 출력하는 UI에 사용하면 매우 편리합니다. 템플릿을 사용하기 위해서는 <code>body</code> 태그 안에 템플릿 코드가 포함되어 있는 
 				<code>&lt;script data-tpl='viewId:tplName' type='text/template'&gt;&lt;/script&gt;</code>를 정의하면 됩니다.<br><br>
 				
 				<code>viewId</code>를 설정하지 않으면 기본적으로 해당 템플릿이 속한 뷰는 <code>body</code>가 됩니다. 		
