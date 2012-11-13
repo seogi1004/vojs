@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<META name="Title" content="[JavaScript Library] - vojs demo">
+<META name="Description" content="JavaScript Library for UI development">
+<META name="Keywords" content="javascript,js,jquery,ui,underscore,mvvm,vo,view,object,view-object">
+<META name="Author" content="Moon-Hak-I">
+<META name="Reply-To(Email)" content="seogi1004@naver.com">
+<META name="Robots" content="ALL">
+<META name="Robots" content="index,follow">
+	
+<script src="../core/jquery-min.js"></script>
+<script src="../vo.js"></script>
+
+<style> 
+	#canvas { background-color: black; position: absolute; width: 400px; height: 400px; }
+	.ball { position: absolute; width: 30px; height: 30px; border-radius: 15px; }
+</style>
+
+<script>
+var MAX_X = 370, MAX_Y = 370;
+	
+var Ball = function(startX, startY) {
+	// vo 적용
+	vo.appendTo(this, 'tpl_ball', 'canvas');
+	
+	this.dx = 4;							// x축 기울기
+	this.dy = -2; 							// y축 기울기
+	
+	this.x = startX; 						// 시작 위치, X
+	this.y = startY;						// 시작 위치, Y
+	
+	this.init = function(speed, xg, yg) {
+		// 공 사이즈 설정.
+		this.size = this.root.style.width;
+
+		// X/Y축 기울기 설정.
+		this.dx = xg;
+		this.dy = yg;
+
+		// 좌, 우 스피드 설정.
+		if(this.dx < 0) this.dx = this.dx - speed;
+		else this.dx = this.dx + speed;
+
+		// 상, 하 스피드 설정.
+		if(this.dy < 0) this.dy = this.dy - speed;
+		else this.dy = this.dy + speed;
+		
+		// 색깔 랜덤 선정
+		var hue = 'rgb(' + (Math.floor(Math.random() * 200) + 55) + ','
+                 + (Math.floor(Math.random() * 200) + 55) + ','
+                 + (Math.floor(Math.random() * 200) + 55) + ')';
+		this.bind.color(hue);
+		
+		// 공 위치 선정
+		this.move();
+	}
+ 
+	this.move = function() {
+		this.x += this.dx;
+		this.y += this.dy;
+
+		// 공이 벽에 부딪쳤을 때, 역으로 이동하게 처리하는 부분.
+		if(this.x > MAX_X || this.x < 0) {
+			this.dx = -this.dx;
+		} else if(this.y > MAX_Y || this.y < 0) {
+			this.dy = -this.dy;
+		}
+		
+		//-- vo-binding, 위치 설정
+		this.bind.l_move(this.x + "px");
+		this.bind.t_move(this.y + "px");
+	}
+	
+	//-- vo-action, 공 클릭시 액션
+	this.act.showColor = function(e) {
+		var color = $(e.target).css("background-color");
+		alert(color);
+		
+		e.stopPropagation();
+	}
+}
+
+$(function() {
+	var canvas = $("#canvas"),
+		list = [];
+	
+	// 클릭시 공 객체 생성
+	canvas.click(function(e) {
+		var tmp_ball = new Ball(e.pageX, e.pageY);
+ 
+		var g_arr = [ -5, -4, -3, -2, -1, 1, 2, 3, 4, 5 ],
+			op1_r = Math.floor(Math.random() * 5) + 1,
+			op2_r = Math.floor(Math.random() * g_arr.length),
+			op3_r = Math.floor(Math.random() * g_arr.length);
+ 
+			tmp_ball.init(op1_r, g_arr[op2_r], g_arr[op3_r]);
+ 
+		list.push(tmp_ball);
+	});
+	
+	function draw() {
+		for(i = 0; i < list.length; i++) {
+			// draw 함수가 한번 호출 할 때마다 공 객체는 이동
+			list[i].move();
+		}
+	}
+	
+	setInterval(draw, 15);
+});
+</script>
+</head>
+<body>
+	<div id="canvas"></div>
+	
+	<script id="tpl_ball" type="text/template">
+	    <span id="<%= viewId %>">
+	    	<div class="ball" data-bind="l_move#left,t_move#top,color#background-color" data-act="showColor#mousedown"></div>
+	    </span>
+	</script>
+</body>
+</html>
