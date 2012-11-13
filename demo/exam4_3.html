@@ -61,12 +61,13 @@ var Ball = function(startX, startY) {
 		this.x += this.dx;
 		this.y += this.dy;
 
-		// 공이 벽에 부딪쳤을 때, 역으로 이동하게 처리하는 부분.
-		if(this.x > MAX_X || this.x < 0) {
-			this.dx = -this.dx;
-		} else if(this.y > MAX_Y || this.y < 0) {
-			this.dy = -this.dy;
-		}
+		// 공이 벽에 부딪쳤을 때, 역으로 이동하게 처리하는 부분
+		if(this.x > MAX_X || this.x < 0) this.dx = -this.dx;
+		if(this.y > MAX_Y || this.y < 0) this.dy = -this.dy;
+		
+		// 공의 위치가 MAX 값을 넘어갔을 때, 처리하는 부분
+		if(this.x > MAX_X) this.x -= this.size;
+		if(this.y > MAX_Y) this.y -= this.size;
 		
 		//-- vo-binding, 위치 설정
 		this.bind.l_move(this.x + "px");
@@ -88,8 +89,12 @@ $(function() {
 	
 	// 클릭시 공 객체 생성
 	canvas.click(function(e) {
-		var tmp_ball = new Ball(e.pageX, e.pageY);
- 
+		var size = e.target.style.width;
+		
+		var x = (e.pageX - size >= MAX_X) ? MAX_X - size : e.pageX,
+			y = (e.pageY - size >= MAX_Y) ? MAX_Y - size : e.pageY;
+		
+		var tmp_ball = new Ball(x, y);
 		var g_arr = [ -5, -4, -3, -2, -1, 1, 2, 3, 4, 5 ],
 			op1_r = Math.floor(Math.random() * 5) + 1,
 			op2_r = Math.floor(Math.random() * g_arr.length),
