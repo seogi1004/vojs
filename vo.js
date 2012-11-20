@@ -1,7 +1,7 @@
 /*! vojs v@1.1.0 | seogi1004.github.com/vojs */
 
 (function(experts) {
-	var ViewObjectTpl = function(text, data, settings) {
+	var getTemplate = function(text, data, settings) {
 		var _ = {},
 			breaker = {};
 	
@@ -105,6 +105,27 @@
 		return _.template(text, data, settings);
 	}
 	
+	var getTplView = function(obj, tplId, targetId, args) {
+		if(typeof(obj) != 'object') throw new Error("VOJS_CRITICAL_ERR: is not an object");
+		if(typeof(tplId) != 'string') throw new Error("VOJS_CRITICAL_ERR: is not an template id");
+		if(typeof(targetId) != 'string') throw new Error("VOJS_CRITICAL_ERR: is not an target id");
+		
+		var tpl = $("#" + tplId);
+		if(tpl.attr("type") != "text/template") throw new Error("VOJS_CRITICAL_ERR: is not a template tag");
+		
+		var viewId = "VOJS_" + new Date().getTime();
+		var params = $.extend({ viewId: viewId }, args),
+			tplHtml = getTemplate(tpl.html(), params),
+			targetSel = (targetId) ? $("#" + targetId) : $("body");
+		
+		if(tplHtml.indexOf("<script") != -1) throw new Error("VOJS_CRITICAL_ERR: script tag should not be used");
+		if(targetSel.size() == 0) throw new Error("VOJS_CRITICAL_ERR: the target does not exist");
+			
+		return {
+			viewId: viewId, targetSel: targetSel, tplHtml: tplHtml
+		};
+	}
+	
 	var ViewObject = function(id) {
 		var	self 		= this;
 			self.root 	= (id) ? $("#" + id).get(0) : $("body").get(0),
@@ -165,13 +186,13 @@
 					if(self.act[act]) {
 						self.act[act].call(self, e); 
 					} else {
-						throw new Error("VOJS_ACT_ERR: " + act + " is not defined");
+						//throw new Error("VOJS_ACT_ERR: " + act + " is not defined");
 					}
 				} else {
 					if(self.act[act]) { 
 						self.act[act].call(self, e, key); 
 					} else { 
-						throw new Error("VOJS_ACT_ERR: " + act + " is not defined");
+						//throw new Error("VOJS_ACT_ERR: " + act + " is not defined");
 					}	
 				}
 			}
@@ -278,7 +299,7 @@
 					}
 					
 					//  tpl 갱신
-					sel.html(ViewObjectTpl($tplHtml, obj));
+					sel.html(getTemplate($tplHtml, obj));
 					
 					// bind/tag 갱신
 					initBind(sel);
@@ -547,41 +568,21 @@
 		init();
 	}
 	
-	var getTplView = function(obj, tplId, targetId) {
-		if(typeof(obj) != 'object') throw new Error("VOJS_CRITICAL_ERR: is not an object");
-		if(typeof(tplId) != 'string') throw new Error("VOJS_CRITICAL_ERR: is not an template id");
-		if(typeof(targetId) != 'string') throw new Error("VOJS_CRITICAL_ERR: is not an target id");
-		
-		var tpl = $("#" + tplId);
-		if(tpl.attr("type") != "text/template") throw new Error("VOJS_CRITICAL_ERR: is not a template tag");
-		
-		var viewId = "_" + new Date().getTime() + "_",
-			tplHtml = ViewObjectTpl(tpl.html(), { viewId: viewId }),
-			targetSel = (targetId) ? $("#" + targetId) : $("body");
-		
-		if(tplHtml.indexOf("<script") != -1) throw new Error("VOJS_CRITICAL_ERR: script tag should not be used");
-		if(targetSel.size() == 0) throw new Error("VOJS_CRITICAL_ERR: the target does not exist");
-			
-		return {
-			viewId: viewId, targetSel: targetSel, tplHtml: tplHtml
-		};
-	}
-	
 	ViewObject.applyTo = function(obj, id) {
 		if(typeof(obj) != 'object') throw new Error("VOJS_CRITICAL_ERR: is not an object");
 		
 		$.extend(obj, new ViewObject(id));
 	}
 	
-	ViewObject.appendTo = function(obj, tplId, targetId) {
-		var res = getTplView(obj, tplId, targetId);
+	ViewObject.appendTo = function(obj, tplId, targetId, args) {
+		var res = getTplView(obj, tplId, targetId, args);
 		
 		res.targetSel.append(res.tplHtml);	
 		ViewObject.applyTo(obj, res.viewId);
 	}
 	
-	ViewObject.prependTo = function(obj, tplId, targetId) {
-		var res = getTplView(obj, tplId, targetId);
+	ViewObject.prependTo = function(obj, tplId, targetId, args) {
+		var res = getTplView(obj, tplId, targetId, args);
 		
 		res.targetSel.prepend(res.tplHtml);	
 		ViewObject.applyTo(obj, res.viewId);
