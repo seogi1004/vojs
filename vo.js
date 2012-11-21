@@ -284,7 +284,7 @@
 						id 		= tmpArr[1];	
 				}
 					
-				var $cont	 = $(viewSel).find("[data-tpl=" + id + "]"),
+				var $cont	 = $(viewSel).find("[data-tpl=" + id + "]").not("script"),
 					$tplHtml = $(this).html();
 				
 				var tplFunc = function() {
