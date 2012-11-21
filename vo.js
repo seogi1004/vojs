@@ -237,25 +237,21 @@
 					tmp_func = $this.data("tag"),
 					command = getParseCommand(tmp_func);
 				
-				//-- command type가 있을 경우, 예외처리
 				if(command.type) { 
 					throw new Error("VOJS_TAG_ERR: invalid expression"); 
 				}
 				
-				// data-tag 태그가 없고, id일 경우
 				if(typeof(tmp_func) != "string") { 
 					tmp_func = this.id;
 					isId = true;
 				}
 				
-				// id는 멀티를 지원하지 않음
 				if(tmp_func.indexOf(':') == -1 || isId) {
 					self.tag[tmp_func] = $this.get(0);
 				} else {
 					funcList.push({ func: command.func, key: command.key, data: $this.get(0) });
 				}
 				
-				// 멀티 태그일 경우, 배열 형태로 세팅
 				if(sel.size() == i + 1) {
 					for(var i in funcList) {
 						if(!self.tag[funcList[i].func]) {
@@ -291,24 +287,16 @@
 					var sel	= $cont,
 						obj = arguments[0];
 					
-					// 결과 값을 입력할 엘리먼트의 id가 있을 경우
 					if(typeof(obj) == "string") {
 						sel = root.find("#" + arguments[0]);
 						obj = arguments[1] ? arguments[1] : {};
 						id	= arguments[0];
 					}
 					
-					//  tpl 갱신
 					sel.html(getTemplate($tplHtml, obj));
 					
-					// bind/tag 갱신
 					initBind(sel);
 					initTag(sel);
-					
-					// 템플릿 대상 tag를 갱신
-					if(self.tag[id]) { 
-						self.tag[id] = sel.get(0);
-					}
 					
 					return sel.get(0);
 				}
@@ -326,14 +314,12 @@
 			var key = null, func = null, type = null;
 			
 			if(command) {
-				// type이 있을 경우,
 				if(command.indexOf('#') != -1) {
 					var arr = command.split("#");
 						type = arr[1],
 						command = arr[0];
 				}
 				
-				// key가 있을 경우,
 				if(command.indexOf(':') != -1) {
 					var arr = command.split(":");
 						key = arr[1], 
@@ -526,12 +512,10 @@
 			}
 			
 			return (function(cmdList) {
-				//-- cmdList가 한개이고, key가 없을 경우 순수 데이터만 반환
 				if(cmdList.length == 1 && !cmdList[0].cmd.key) {
 					if(is_elem) return cmdList[0].elem;
 					else return getData(cmdList[0]);
 					
-				//-- cmdList가 여러개 일때, cmd.key의 유무에 따라 다르게 처리
 				} else {
 					var list = new Object(),
 						index = 0;
@@ -551,9 +535,7 @@
 			})(cmdList);
 		}
 		
-		//--
-		//
-		
+		//-- Search API
 		self.bind.get 	= function(key) 	{ return _search("bind", key, true); }
 		self.tag.get 	= function(key) 	{ return _search("tag",  key, true); }
 		self.act.get 	= function(key) 	{ return _search("act",  key, true); }
@@ -562,9 +544,7 @@
 		self.tag.val 	= function(key) 	{ return _search("tag",  key, false); }
 		self.act.val 	= function(key) 	{ return _search("act",  key, false); }
 		
-		
-		//--
-		
+		//-- Initialization
 		init();
 	}
 	
@@ -593,7 +573,6 @@
 			tpl_ext = (ViewObject.includeExt) ? ViewObject.includeExt : "tpl",
 			len = arguments.length;
 			
-		// 옵션 체크, 마지막 파라메터가 객체일 경우
 		if(typeof(arguments[len - 1]) == "object") {
 			var opts = arguments[len - 1];
 			
