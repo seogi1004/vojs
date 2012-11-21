@@ -627,5 +627,9 @@
 		}
 	}
 	
+	ViewObject.template = function(text, data, settings) {
+		return getTemplate(text, data, settings);
+	}
+	
 	experts.vo = ViewObject;
 })(window);
