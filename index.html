@@ -685,6 +685,41 @@
 					<iframe src="http://app.inpost.kr/vojs/demo/exam8.html" style="width:100%; height:300px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
 				</div>
 			</p>
+			
+			<h5>Template Function</h5>
+			<p>
+				<code>vojs</code>는 뷰 속성에 템플릿을 추가하는 방법 말고, 간단하게 템플릿 엔진을 사용할 수 있는 함수를 제공합니다.
+				
+				<pre class="brush: html;">
+					<div id="info"></div>
+
+					<script id="tpl_info" type="text/template">
+						<div class="name"><%= name %></div>
+						<div class="age"><%= age %></div>
+						<div class="sex">
+							<% if(sex == 1) { %>남자<% } else { %>여자<% } %>
+						</div>
+						<ul class="like">
+						<% for(var i in likes) { %>
+							<li><%= likes[i] %></li>
+						<% } %>
+						</ul>
+					</script>
+				</pre>
+				사용 방법이 <code>underscore.js</code>의 <code>_.template</code> 함수와 동일하고, 코드만 봐도 쉽게 이해할 수 있기 때문에 자세한 설명은 생략하겠습니다. 
+				
+				<pre class="brush: js;">
+					var tpl = $("#tpl_info").html();
+					var obj = { 
+								name: "홍재석", 
+								age: 27, sex: 1, 
+								likes: [ '프로그래밍', '전세', '아메리카노' ] 
+							};
+					
+					$("#info").html(vo.template(tpl, obj));
+				</pre>
+				
+			</p>
 		</div>
 		
 		<div class="section">
