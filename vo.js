@@ -1,4 +1,4 @@
-/*! vojs v@1.1.0 | seogi1004.github.com/vojs */
+/*! vojs v@1.2.2 | seogi1004.github.com/vojs */
 
 (function(experts) {
 	var getTemplate = function(text, data, settings) {
@@ -126,6 +126,61 @@
 		};
 	}
 	
+	var ViewData = function(type, elem) {
+		var $sel = $(elem);
+		var dataType = 0,
+			dataAttr = "";
+		
+		function isTypeHtml(elem) {
+			if(elem.value == undefined || elem.tagName.toUpperCase() == 'BUTTON')
+				return true;
+			
+			return false;
+		}
+		
+		function init() {
+			if(!type) {
+				if(isTypeHtml(elem)) dataType = "html";
+				else dataType = "value";
+			} else {
+				if(type.indexOf(".") != -1) {
+					var arr = type.split(".");
+					
+					dataType = arr[0];
+					dataAttr = arr[1];
+				} else {
+					dataType = "css";
+					dataAttr = type;
+				}
+			}
+		}
+		
+		this.run = function(value) {
+			var method = {
+				"html": function() { 
+					if(value) $sel.html(value);
+					else return $sel.html();
+				},
+				"value": function() { 
+					if(value) $sel.val(value);
+					else return $sel.val();
+				},
+				"css": function() { 
+					if(value) $sel.css(dataAttr, value);
+					else return $sel.css(dataAttr);
+				},
+				"attr": function() { 
+					if(value) $sel.attr(dataAttr, value);
+					else return $sel.attr(dataAttr);
+				},
+			};
+			
+			return method[dataType]();
+		}
+		
+		init();
+	}
+	
 	var ViewObject = function(id) {
 		var	self 		= this;
 			self.root 	= (id) ? $("#" + id).get(0) : $("body").get(0),
@@ -144,33 +199,13 @@
 		}
 		
 		function initAct(root) {
-			root.on("click", "[data-act]", function(e) {
-				initActProc("click", e);
-			});
-			
-			root.on("mousedown", "[data-act]", function(e) {
-				initActProc("mousedown", e);
-			});
-			
-			root.on("mouseup", "[data-act]", function(e) {
-				initActProc("mouseup", e);
-			});
-
-			root.on("dblclick", "[data-act]", function(e) {
-				initActProc("dblclick", e);
-			});
-
-			root.on("change", "[data-act]", function(e) {
-				initActProc("change", e);
-			});
-
-			root.on("keydown", "[data-act]", function(e) {
-				initActProc("keydown", e);
-			});
-			
-			root.on("keyup", "[data-act]", function(e) {
-				initActProc("keyup", e);
-			});
+			root.on("click", 	"[data-act]", function(e) { initActProc("click", e); });
+			root.on("mousedown","[data-act]", function(e) { initActProc("mousedown", e); });
+			root.on("mouseup", 	"[data-act]", function(e) { initActProc("mouseup", e); });
+			root.on("dblclick", "[data-act]", function(e) { initActProc("dblclick", e); });
+			root.on("change",	"[data-act]", function(e) { initActProc("change", e); });
+			root.on("keydown",	"[data-act]", function(e) { initActProc("keydown", e); });
+			root.on("keyup", 	"[data-act]", function(e) { initActProc("keyup", e); });
 		}
 		
 		function initActProc(type, e) {
@@ -366,27 +401,10 @@
 				commArr = (tmpCommArr.length > 0) ? tmpCommArr : [ tmpCommArr ];
 			
 			for(var i in commArr) {
-				if(commArr[i].func == func) {
-					var type = commArr[i].type;
-					
-					if(!type) {
-						if(elem.value == undefined) 
-							$(elem).html(value);
-						else 			
-							$(elem).val(value);
-					} else {
-						if(type.indexOf(".") != -1) {
-							var arr = type.split(".");
-							
-							if(arr[0] == "css") {
-								$(elem).css(arr[1], value);
-							} else if(arr[0] == "attr") {
-								$(elem).attr(arr[1], value);
-							}
-						} else {
-							$(elem).css(type, value);
-						}
-					}
+				var comm = commArr[i];
+				
+				if(comm.func == func) {
+					new ViewData(comm.type, elem).run(value);
 				}
 			}
 		}	
@@ -480,35 +498,8 @@
 				}
 			});
 			
-			function getDataElem(elem) {
-				if(elem.value == undefined) 
-					return $(elem).html();
-				else 			
-					return $(elem).val();
-			}
-			
 			function getData(data) {
-				var cmd = data.cmd,	elem = data.elem;
-					
-				if(type == "bind") {
-					if(!cmd.type) {
-						return getDataElem(elem);
-					} else {
-						if(cmd.type.indexOf(".") != -1) {
-							var arr = cmd.type.split(".");
-							
-							if(arr[0] == "css") {
-								return $(elem).css(arr[1]);
-							} else if(arr[1] == "attr") {
-								return $(elem).attr(arr[1]);
-							}
-						} else {
-							return $(elem).css(cmd.type);
-						}
-					}
-				} else {
-					return getDataElem(elem);
-				}
+				return new ViewData(data.cmd.type, data.elem).run();
 			}
 			
 			return (function(cmdList) {
@@ -543,6 +534,17 @@
 		self.bind.val 	= function(key) 	{ return _search("bind", key, false); }
 		self.tag.val 	= function(key) 	{ return _search("tag",  key, false); }
 		self.act.val 	= function(key) 	{ return _search("act",  key, false); }
+		
+		//-- Memory Returned API
+		self.destroy = function() {
+			self.close();
+			$(self.root).remove();
+		}
+		
+		self.close = function() {
+			$(self.root).off();
+			for(var key in this) { delete this[key]; }
+		}
 		
 		//-- Initialization
 		init();
