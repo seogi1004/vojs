@@ -537,12 +537,12 @@
 		
 		//-- Memory Returned API
 		self.destroy = function() {
-			self.close();
-			$(self.root).remove();
+			$(self.root).off().remove();
+			self.close(true);
 		}
 		
-		self.close = function() {
-			$(self.root).off();
+		self.close = function(isOff) {
+			if(!isOff) $(self.root).off();
 			for(var key in this) { delete this[key]; }
 		}
 		
