@@ -126,6 +126,72 @@
 		};
 	}
 	
+	var ViewRouter = new function() {
+		var voList = [],	
+			funcList = null;
+		
+		function run(e) {
+			if(!location.hash) return;
+			var args = location.hash.replace("#", "").split("/");
+			
+			if(args.length < 1) { 
+				throw new Error("VOJS_ROUTER_ERR: parameter does not exist");
+			} else {
+				var comm = getCommand(args);
+				
+				try {
+					if(isFunc(comm.func)) voList[comm.id].act[comm.func](e, comm.args);
+					else throw new Error("VOJS_ROUTER_ERR: " + comm.func + " is not specified");
+				} catch(e) {
+					throw new Error("VOJS_ROUTER_ERR: " + comm.func + " is not defined");
+				}
+			}
+		}
+		
+		function getCommand(args) {
+			var mod = args.shift();
+			
+			if(mod.indexOf(":") != -1) {
+				var tmp = mod.split(":");
+				
+				id = tmp[0];
+				func = tmp[1];
+			} else {
+				id = "body";
+				func = mod;
+			}
+				
+			return {
+				id: id,
+				func: func,
+				args: args
+			};
+		}
+		
+		function isFunc(name) {
+			if(funcList.length == 0) return true;
+			
+			for(var i = 0; i < funcList.length; i++) {
+				if(funcList[i] == name) return true;
+			}
+			
+			return false;
+		}
+		
+		this.init = function(funcs) {
+			funcList = (funcs && funcs.length > 0) ? funcs : [];
+			
+			$(window).bind('hashchange', function(e) {
+				run(e);
+			}).trigger('hashchange');
+		}
+		
+		this.insert = function(obj, id) {
+			id = (id) ? id : "body";
+			voList[id] = obj;
+		}
+	}
+	
 	var ViewData = function(type, elem) {
 		var $sel = $(elem);
 		var dataType = 0,
@@ -552,8 +618,9 @@
 	
 	ViewObject.applyTo = function(obj, id) {
 		if(typeof(obj) != 'object') throw new Error("VOJS_CRITICAL_ERR: is not an object");
+		var obj = $.extend(obj, new ViewObject(id));
 		
-		$.extend(obj, new ViewObject(id));
+		ViewRouter.insert(obj, id);
 	}
 	
 	ViewObject.appendTo = function(obj, tplId, targetId, args) {
@@ -610,6 +677,10 @@
 	
 	ViewObject.template = function(text, data, settings) {
 		return getTemplate(text, data, settings);
+	}
+	
+	ViewObject.router = function() {
+		ViewRouter.init(arguments);
 	}
 	
 	experts.vo = ViewObject;
