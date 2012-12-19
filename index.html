@@ -140,9 +140,9 @@
 	    				person2 = new Person("person2", "Thomas", 15);
 				</pre>
 				
-				<code>James</code>와 <code>Thomas</code>라는 이름을 가진 객체를 생성하였다면, 아래와 같은 예제가 실행됩니다. (<a href="http://app.inpost.kr/vojs/demo/exam1_4.html" target="_blank">Link</a>)
+				<code>James</code>와 <code>Thomas</code>라는 이름을 가진 객체를 생성하였다면, 아래와 같은 예제가 실행됩니다. (<a href="http://app.youngman.kr/vojs/demo/exam1_4.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam1_4.html" style="width:100%; height:142px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam1_4.html" style="width:100%; height:142px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 				
 				<code>Add 1-year</code> 버튼을 클릭하면 대상의 나이가 증가합니다. 먼저 <code>Person</code>클래스의 2라인에서 호출된 <code>vo.applyTo(this, id);</code> 코드는 
@@ -283,9 +283,9 @@
 					);
 				</pre>
 				
-				아래는 <code>key</code>를 활용하여 구현한 입력창 예제입니다. (<a href="http://app.inpost.kr/vojs/demo/exam6.html" target="_blank">Link</a>)
+				아래는 <code>key</code>를 활용하여 구현한 입력창 예제입니다. (<a href="http://app.youngman.kr/vojs/demo/exam6.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam6.html" style="width:100%; height:220px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam6.html" style="width:100%; height:220px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 			</p>
 			<!--// Tag -->
@@ -313,9 +313,9 @@
 					new Body();
 				</pre>
 				
-				액션은 총 7가지의 이벤트 타입을 제공하며, 테스트는 아래 예제를 통해서 할 수 있습니다. (<a href="http://app.inpost.kr/vojs/demo/exam5_1.html" target="_blank">Link</a>)
+				액션은 총 7가지의 이벤트 타입을 제공하며, 테스트는 아래 예제를 통해서 할 수 있습니다. (<a href="http://app.youngman.kr/vojs/demo/exam5_1.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam5_1.html" style="width:100%; height:404px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam5_1.html" style="width:100%; height:404px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 			</p>
 				
@@ -335,9 +335,41 @@
 					}	
 				</pre>
 				
-				아래는 <code>key</code>를 활용하여 구현한 이벤트 처리 예제입니다. (<a href="http://app.inpost.kr/vojs/demo/exam5_2.html" target="_blank">Link</a>)
+				아래는 <code>key</code>를 활용하여 구현한 이벤트 처리 예제입니다. (<a href="http://app.youngman.kr/vojs/demo/exam5_2.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam5_2.html" style="width:100%; height:236px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam5_2.html" style="width:100%; height:236px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+			</p>
+			
+			<h5>Router</h5>
+			<p>
+				<code>vojs</code>의 라우터 기능을 사용하면 해쉬 URL을 통해서도 정의된 액션 메소드를 호출할 수 있습니다. 
+				해쉬 URL을 사용하는 이유는 동적으로 웹 페이지를 변경할 경우에 브라우저 히스토리 기능을 사용할 수 없기 때문입니다.
+				
+				<pre class="brush: html;">
+					<li><a href="#navbar:home">Home</a> <span class="divider">/</span></li>
+					<li><a href="#navbar:library">Library</a> <span class="divider">/</span></li>
+					<li><a href="#navbar:data">Data</a></li>
+				</pre>
+				
+				라우터의 사용 방법은 태그의 href 속성에 <code>#viewId:actionMethodName/param1/param2/.../...</code>와 같이 입력하면 됩니다. 
+				그리고 라우터 URL을 <code>/</code>로 구분하여 매개변수를 임의로 추가할 수 있습니다.<br/><br/> 
+				
+				해쉬 URL이 변경되면 <code>/</code>로 구분된 매개변수들을 아래와 같이 배열 형태로 받을 수 있습니다. (<code>args</code>)
+				<pre class="brush: js;">
+					obj.act.home = function(e, args) { /* Action */ }
+					obj.act.library = function(e, args) { /* Action */ }
+					obj.act.data = function(e, args) { /* Action */ }	
+				</pre>
+				
+				아래 예제보다는 <code>Link</code>를 클릭하여 해당 페이지에서 직접 테스트 하실 것을 권장합니다.(<a href="http://app.youngman.kr/vojs/demo/exam9_1.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.youngman.kr/vojs/demo/exam9_1.html" style="width:100%; height:155px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+				</div>
+				
+				아래는 라우터 기능을 사용하지 않았으며, 브라우저 히스토리 기능이 동작하지 않습니다. (<a href="http://app.youngman.kr/vojs/demo/exam9_2.html" target="_blank">Link</a>)
+				<div class="example">
+					<iframe src="http://app.youngman.kr/vojs/demo/exam9_2.html" style="width:100%; height:155px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 			</p>
 			<!--// Action -->
@@ -371,9 +403,9 @@
 					<div class="alert alert-success" data-bind="textShow"></div>
 				</pre>
 				
-				아래는 멀티바인딩을 활용한 예제입니다.  (<a href="http://app.inpost.kr/vojs/demo/exam1_1.html" target="_blank">Link</a>)
+				아래는 멀티바인딩을 활용한 예제입니다.  (<a href="http://app.youngman.kr/vojs/demo/exam1_1.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam1_1.html" style="width:100%; height:209px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam1_1.html" style="width:100%; height:209px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 			</p>
 			
@@ -399,9 +431,9 @@
 					<div class="bar" width="0%" data-bind="percent#attr.width"></div>
 				</pre>
 				
-				아래는 <code>type</code>을 활용하여 프로그레스 바를 구현한 예제입니다. (<a href="http://app.inpost.kr/vojs/demo/exam1_3.html" target="_blank">Link</a>)
+				아래는 <code>type</code>을 활용하여 프로그레스 바를 구현한 예제입니다. (<a href="http://app.youngman.kr/vojs/demo/exam1_3.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam1_3.html" style="width:100%; height:160px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam1_3.html" style="width:100%; height:160px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 				
 				참고로 이 예제는 프로그레스 바를 각각의 별도의 뷰-오브젝트로 설정하여 구현한 것입니다. 이를 하나의 뷰-오브젝트로 설정하고, 각각의 프로그레스 바를 <code>key</code>로 구분하여 만들 수도 있습니다.
@@ -425,9 +457,9 @@
 					obj.bind.percent("red", "60%");
 				</pre>
 				
-				아래는 <code>key</code>와 <code>type</code>을 활용하여 프로그레스 바를 구현한 예제입니다. (<a href="http://app.inpost.kr/vojs/demo/exam1_2.html" target="_blank">Link</a>)
+				아래는 <code>key</code>와 <code>type</code>을 활용하여 프로그레스 바를 구현한 예제입니다. (<a href="http://app.youngman.kr/vojs/demo/exam1_2.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam1_2.html" style="width:100%; height:160px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam1_2.html" style="width:100%; height:160px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 			</p>
 			
@@ -445,9 +477,9 @@
 				</pre>
 				
 				<code>l_move</code>/<code>t_move</code> 메소드가 호출되면 해당 뷰 속성의 옵션에 정의된 <code>css</code> 값이 변경됩니다. 아래 예제에 포커스를 넣고 키보드 방향키를 눌러보면 빨간색 네모 박스가 이동하는 것을 확인할 수 있습니다. 
-				(<a href="http://app.inpost.kr/vojs/demo/exam1_5.html" target="_blank">Link</a>)
+				(<a href="http://app.youngman.kr/vojs/demo/exam1_5.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam1_5.html" style="width:100%; height:200px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam1_5.html" style="width:100%; height:200px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 			</p>
 			<!--// Binding -->
@@ -508,9 +540,9 @@
 					new Body();
 				</pre>
 				
-				아래는 템플릿을 활용하여 테이블을 구현한 예제입니다. (<a href="http://app.inpost.kr/vojs/demo/exam2_1.html" target="_blank">Link</a>)
+				아래는 템플릿을 활용하여 테이블을 구현한 예제입니다. (<a href="http://app.youngman.kr/vojs/demo/exam2_1.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam2_1.html" style="width:100%; height:330px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam2_1.html" style="width:100%; height:330px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
 				</div>
 			</p>
 			
@@ -552,9 +584,9 @@
     				}
 				</pre>
 				
-				그럼, 아래 예제를 통해 테스트 해보겠습니다. (<a href="http://app.inpost.kr/vojs/demo/exam2_2.html" target="_blank">Link</a>)
+				그럼, 아래 예제를 통해 테스트 해보겠습니다. (<a href="http://app.youngman.kr/vojs/demo/exam2_2.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam2_2.html" style="width:100%; height:330px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam2_2.html" style="width:100%; height:330px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
 				</div>
 			</p>
 			<!--// Template -->
@@ -605,9 +637,9 @@
 					);
 				</pre>
 				
-				아래는 <code>get</code>와 <code>val</code>를 활용하여 구현한 입력창 예제입니다. (<a href="http://app.inpost.kr/vojs/demo/exam7.html" target="_blank">Link</a>)
+				아래는 <code>get</code>와 <code>val</code>를 활용하여 구현한 입력창 예제입니다. (<a href="http://app.youngman.kr/vojs/demo/exam7.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam7.html" style="width:100%; height:220px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam7.html" style="width:100%; height:220px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 				</div>
 			</p>
 			
@@ -627,11 +659,11 @@
 				
 				위의 두 코드는 동일한 기능을 수행하는데, <code>fileName1</code>과 <code>fileName2</code> 파일의 내용을 동적으로 <code>body</code> 태그 안에 포함시킵니다. 
 				먼저 옵션에 대한 설명을 하자면 <code>path</code>는 로드 파일이 존재하는 폴더의 경로이며, <code>tpl</code>은 로드 파일의 확장자입니다. 
-				(<a href="http://app.inpost.kr/vojs/demo/exam3_1.html" target="_blank">Link</a>)
+				(<a href="http://app.youngman.kr/vojs/demo/exam3_1.html" target="_blank">Link</a>)
 				<br><br>
 				
 				그리고 <code>body</code>가 아닌 임의의 <code>id</code>를 가진 태그에 파일을 로드하는 기능도 제공합니다.
-				아래는 <code>test1</code>과 <code>test2</code>라는 <code>id</code>를 가진 태그에 해당 파일을 로드하는 코드입니다. (<a href="http://app.inpost.kr/vojs/demo/exam3_1.html" target="_blank">Link</a>)
+				아래는 <code>test1</code>과 <code>test2</code>라는 <code>id</code>를 가진 태그에 해당 파일을 로드하는 코드입니다. (<a href="http://app.youngman.kr/vojs/demo/exam3_1.html" target="_blank">Link</a>)
 				<pre class="brush: js;">
 					vo.includeTpl("test1:fileName1", "test2:fileName2");
 				</pre>
@@ -677,9 +709,9 @@
 					new Body();
 				</pre>
 			
-				아래는 뷰-템플릿을 활용하여 프로그레스 바를 동적으로 생성할 수 있도록 구현한 예제입니다. (<a href="http://app.inpost.kr/vojs/demo/exam8.html" target="_blank">Link</a>)
+				아래는 뷰-템플릿을 활용하여 프로그레스 바를 동적으로 생성할 수 있도록 구현한 예제입니다. (<a href="http://app.youngman.kr/vojs/demo/exam8.html" target="_blank">Link</a>)
 				<div class="example">
-					<iframe src="http://app.inpost.kr/vojs/demo/exam8.html" style="width:100%; height:300px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+					<iframe src="http://app.youngman.kr/vojs/demo/exam8.html" style="width:100%; height:300px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
 				</div>
 			</p>
 			
@@ -724,9 +756,9 @@
 			
 			<p>
 				아래 링크를 클릭하면 앞서 보여드린 모든 예제들을 테스트 할 수 있습니다. 참고로 웹 기반의 FTP 클라이언트인 <code>wFTP</code>도 <code>vojs</code> 기반으로 만들어졌으니 같이 참고하시면 됩니다. 
-				(<a href="http://app.inpost.kr/wftp/" target="_blank">Link</a>)
+				(<a href="http://app.youngman.kr/wftp/" target="_blank">Link</a>)
 				
-				<a href="http://app.inpost.kr/vojs/demo/index.html" target="_blank"><img src="http://static.inpost.kr/post/wftp/intro/demo.png" style="width:100%; height: 200px;" /></a>
+				<a href="http://app.youngman.kr/vojs/demo/index.html" target="_blank"><img src="http://static.inpost.kr/post/wftp/intro/demo.png" style="width:100%; height: 200px;" /></a>
 			</p>
 		</div>
 		
