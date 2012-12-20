@@ -1,4 +1,4 @@
-/*! vojs v@1.2.2 | seogi1004.github.com/vojs */
+/*! vojs v@1.2.3 | seogi1004.github.com/vojs */
 
 (function(experts) {
 	var getTemplate = function(text, data, settings) {
