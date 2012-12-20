@@ -140,7 +140,9 @@
 				var comm = getCommand(args);
 				
 				try {
-					if(isFunc(comm.func)) voList[comm.id].act[comm.func](e, comm.args);
+					var func = voList[comm.id].act[comm.func];
+					
+					if(func) func(e, comm.args);
 					else throw new Error("VOJS_ROUTER_ERR: " + comm.func + " is not specified");
 				} catch(e) {
 					throw new Error("VOJS_ROUTER_ERR: " + comm.func + " is not defined");
@@ -168,19 +170,7 @@
 			};
 		}
 		
-		function isFunc(name) {
-			if(funcList.length == 0) return true;
-			
-			for(var i = 0; i < funcList.length; i++) {
-				if(funcList[i] == name) return true;
-			}
-			
-			return false;
-		}
-		
-		this.init = function(funcs) {
-			funcList = (funcs && funcs.length > 0) ? funcs : [];
-			
+		this.init = function() {
 			$(window).bind('hashchange', function(e) {
 				run(e);
 			}).trigger('hashchange');
@@ -238,7 +228,7 @@
 				"attr": function() { 
 					if(value) $sel.attr(dataAttr, value);
 					else return $sel.attr(dataAttr);
-				},
+				}
 			};
 			
 			return method[dataType]();
@@ -680,7 +670,7 @@
 	}
 	
 	ViewObject.router = function() {
-		ViewRouter.init(arguments);
+		ViewRouter.init();
 	}
 	
 	experts.vo = ViewObject;

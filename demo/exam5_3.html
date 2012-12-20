@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<META name="Title" content="[JavaScript Library] - vojs demo">
+<META name="Description" content="JavaScript Library for UI development">
+<META name="Keywords" content="javascript,js,jquery,ui,underscore,mvvm,vo,view,object,view-object">
+<META name="Author" content="Moon-Hak-I">
+<META name="Reply-To(Email)" content="seogi1004@naver.com">
+<META name="Robots" content="ALL">
+<META name="Robots" content="index,follow">
+	
+<script src="../core/jquery.min.js"></script>
+<!--[if lt IE 8]>
+<script src="../core/jquery.ba-bbq.min.js"></script>
+<![endif]-->
+<script src="../vo.min.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>
+	body { padding: 20px; }
+	#body { margin-bottom: 15px; }
+	.row { background-color: #dcdcdc; margin-bottom: 20px; margin-left: 1px; }
+	.progress { margin-bottom: 10px; }
+</style>
+
+<script>
+var Navbar = function(id) {
+	vo.applyTo(this, id);
+	
+	var act = this.act,
+		bind = this.bind;
+		
+	act.home = function(evt, args) {
+		bind.view("<strong>Home</strong> " + args.join(", "));
+	}
+	
+	act.library = function(evt, args) {
+		bind.view("<strong>Library</strong> " + args.join(", "));
+	}
+	
+	act.data = function(evt, args) {
+		bind.view("<strong>Data</strong> " + args.join(", "));
+	}
+}
+
+$(function() {
+	new Navbar("navbar");
+	vo.router();
+});
+</script>
+</head>
+<body>
+
+<div id="navbar">
+	<ul class="breadcrumb">
+		<li><a href="#navbar:home">Home</a> <span class="divider">/</span></li>
+		<li><a href="#navbar:library">Library</a> <span class="divider">/</span></li>
+		<li><a href="#navbar:data">Data</a></li>
+	</ul>
+	<div data-bind="view" class="well">
+	</div>
+</div>
+
+</body>
+</html>
