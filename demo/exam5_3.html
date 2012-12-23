@@ -29,19 +29,16 @@
 var Navbar = function(id) {
 	vo.applyTo(this, id);
 	
-	var act = this.act,
-		bind = this.bind;
-		
-	act.home = function(evt, args) {
-		bind.view("<strong>Home</strong> " + args.join(", "));
+	this.act.home = function(evt, args) {
+		this.bind.view("<strong>Home</strong> " + args.join(", "));
 	}
 	
-	act.library = function(evt, args) {
-		bind.view("<strong>Library</strong> " + args.join(", "));
+	this.act.library = function(evt, args) {
+		this.bind.view("<strong>Library</strong> " + args.join(", "));
 	}
 	
-	act.data = function(evt, args) {
-		bind.view("<strong>Data</strong> " + args.join(", "));
+	this.act.data = function(evt, args) {
+		this.bind.view("<strong>Data</strong> " + args.join(", "));
 	}
 }
 

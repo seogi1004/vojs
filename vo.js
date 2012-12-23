@@ -140,9 +140,10 @@
 				var comm = getCommand(args);
 				
 				try {
-					var func = voList[comm.id].act[comm.func];
+					var obj = voList[comm.id],
+						func = obj.act[comm.func];
 					
-					if(func) func(e, comm.args);
+					if(func) func.call(obj, e, comm.args);
 					else throw new Error("VOJS_ROUTER_ERR: " + comm.func + " is not specified");
 				} catch(e) {
 					throw new Error("VOJS_ROUTER_ERR: " + comm.func + " is not defined");
@@ -301,7 +302,7 @@
 					
 				var commArr = (tmpCommArr.length > 0) ? tmpCommArr : [ tmpCommArr ];
 					
-				for(var j in commArr) {
+				for(var j=0, len=commArr.length; j < len; j++) {
 					var command = commArr[j];
 					
 					if(!command.key) {
@@ -344,7 +345,7 @@
 				}
 				
 				if(sel.size() == i + 1) {
-					for(var i in funcList) {
+					for(var i=0, len=funcList.length; i < len; i++) {
 						if(!self.tag[funcList[i].func]) {
 							self.tag[funcList[i].func] = new Object();
 						} 
@@ -434,7 +435,7 @@
 				var arr = command.split(","),
 					commArr = new Array();
 				
-				for(var i in arr) {
+				for(var i=0, len=arr.length; i < len; i++) {
 					commArr.push(getParseCommand(arr[i]));
 				}
 				
@@ -456,7 +457,7 @@
 				tmpCommArr = getParseCommandArr(tmpComm),
 				commArr = (tmpCommArr.length > 0) ? tmpCommArr : [ tmpCommArr ];
 			
-			for(var i in commArr) {
+			for(var i=0, len=commArr.length; i < len; i++) {
 				var comm = commArr[i];
 				
 				if(comm.func == func) {
@@ -474,7 +475,7 @@
 		function settingBindMulti(bindList) {
 			var list = new Object();
 			
-			for(var i in bindList) {
+			for(var i=0, len=bindList.length; i < len; i++) {
 				var obj = bindList[i];
 				if(!list[obj.name]) list[obj.name] = [];
 				
@@ -486,7 +487,7 @@
 					self.bindMultiProc = function(value) {
 						var elemList = list[func];
 						
-						for(var j = 0; j < elemList.length; j++) {
+						for(var j=0, len=elemList.length; j < len; j++) {
 							var elem = elemList[j];
 							
 							settingBindProc(func, elem, value);
@@ -507,7 +508,7 @@
 		 * @param {Array} funcList
 		 */
 		function settingBindFunc(funcList) {
-			for(var i in funcList) {
+			for(var i=0, len=funcList.length; i < len; i++) {
 				var func = funcList[i].func;
 				
 				(function(func) {
@@ -520,7 +521,7 @@
 				})(func);
 				
 				function getFuncElem(funcList, func, key) {
-					for(var i in funcList) {
+					for(var i=0, len=funcList.length; i < len; i++) {
 						var obj = funcList[i];
 						
 						if(obj.func == func && obj.key == key) {
@@ -567,7 +568,7 @@
 					var list = new Object(),
 						index = 0;
 					
-					for(var i = 0; i < cmdList.length; i++) {
+					for(var i=0, len=cmdList.length; i < len; i++) {
 						var cmd = cmdList[i].cmd;
 						
 						if(cmd.key) { key = cmd.key; } 
@@ -639,7 +640,7 @@
 			tpl_ext = (opts.ext) ? opts.ext : tpl_ext;
 		}
 		
-		for(var i in arguments) {
+		for(var i=0, len=arguments.length; i < len; i++) {
 			var tpl = arguments[i],
 				url = "",
 				sel = "body";
