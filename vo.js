@@ -430,7 +430,7 @@
 		
 		function getParseCommandArr(command) {
 			if(command.indexOf(',') != -1) {
-				if(command.indexOf(':') != -1) throw new Error("VOJS_BIND_ERR: bind array keys can not be used");
+				//if(command.indexOf(':') != -1) throw new Error("VOJS_BIND_ERR: bind array keys can not be used");
 				
 				var arr = command.split(","),
 					commArr = new Array();
