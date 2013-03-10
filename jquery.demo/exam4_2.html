@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<META name="Title" content="[JavaScript Library] - vojs demo">
+<META name="Description" content="JavaScript Library for UI development">
+<META name="Keywords" content="javascript,js,jquery,ui,underscore,mvvm,vo,view,object,view-object">
+<META name="Author" content="Moon-Hak-I">
+<META name="Reply-To(Email)" content="seogi1004@naver.com">
+<META name="Robots" content="ALL">
+<META name="Robots" content="index,follow">
+	
+<script src="../core/jquery.min.js"></script>
+<script src="../jquery.vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>body { padding: 5px; }</style>
+
+<script>
+Array.prototype.next = function() {
+	if(this.length > 1) {
+		var data = this.shift();
+		this.push(data);
+	}
+
+	return data;
+};
+
+Array.prototype.prev = function() {
+	if(this.length > 1) {
+		var tmpList = new Array();
+		tmpList.push(this[this.length - 1]);
+		tmpList.push(this[0]);
+
+		for(var i = 1; i < this.length - 1; i++) {
+			tmpList.push(this[i]);
+		}
+
+		for(var j = 0; j < this.length; j++) {
+			this[j] = tmpList[j];
+		}
+
+		return this[0];
+	}
+};
+
+var Carousel = function(def_imgs) {
+	$("body").applyVo(this);
+	
+	var tag = this.tag,
+		act = this.act,
+		bind = this.bind,
+		tpl = this.tpl;
+		
+	var w = 370,			// 슬라이더 이미지 가로크기
+		h = 311,			// 슬라이더 이미지 세로크기
+		imgList = (def_imgs.length > 0) ? def_imgs : [];
+		
+	function next(width, callback) {
+		bind.position("-" + width + "px");
+		
+		if(width == w) {
+			bind.position("0px");
+			callback();
+		} else {
+			setTimeout(function() {
+				next(width + 37, callback);
+			}, 50);
+		} 
+	}
+	
+	function prev(width, callback) {
+		bind.position("-" + width + "px");
+		
+		if(width == 0) {
+			bind.position("0px");
+			callback();
+		} else {
+			setTimeout(function() {
+				prev(width - 37, callback);
+			}, 50);
+		} 
+	}
+
+	function render() {
+		$(tag.slider).width(w * imgList.length).height(h);
+		
+		bind.description(imgList[0].desc);
+		tpl.sliderList("#slider", { imgList: imgList, width: w, height: h });
+	}
+	
+	function init() {
+		$(tag.container).width(w).height(h).css({ "overflow": "hidden", "position": "relative" });
+		render();
+	}
+	
+	act.order = function(e, type) {
+		if(type == "next") {
+			next(0, function() {
+				imgList.next();
+				render();
+			});
+		} else {
+			imgList.prev();
+			render();
+			
+			prev(w, function() {
+				render();
+			});
+		}
+		
+		e.preventDefault();
+	}
+	
+	act.addImage = function(e) {
+		imgList.push(tag.val("image"));
+		render();
+		
+		$(tag.showInput).modal("hide");
+	}
+
+	init();
+};
+
+$(function() {
+	var imgList = [
+		{ url: "http://static.inpost.kr/post/wftp/intro/architecture.jpg", desc: "Image 1" },
+		{ url: "http://static.inpost.kr/post/wftp/intro/demo.png", desc: "Image 2" },
+		{ url: "http://static.inpost.kr/post/wftp/intro/ui_detail.jpg", desc: "Image 3" }
+	];
+	
+	test = new Carousel(imgList);
+});
+</script>
+
+</head>
+<body>
+<ul class="thumbnails">
+	<li class="span5">
+		<div class="thumbnail">
+			<div data-tag="container">    
+				<div id="slider" data-bind="position#margin-left">
+					<!-- include template -->
+				</div>
+			</div>
+			<div class="caption">
+				<h3>Description</h3>
+				<p data-bind="description">
+					<!-- insert image's description -->
+				</p>
+				<p>
+					<a href="#" class="btn" data-act="order:prev">Prev</a>
+					<a href="#" class="btn" data-act="order:next">Next</a>
+				</p>
+			</div>
+		</div>
+	</li>
+	
+	<script data-tpl="sliderList" type="text/template">
+		<% for(var i in imgList) { %>
+			<% if(imgList[i].url) { %>
+			<img src="<%= imgList[i].url %>" style="width: <%= width %>px; height: <%= height %>px; float: left;" />
+			<% } %>
+		<% } %>
+	</script>
+</ul>
+
+<!-- Add Image, Button -->
+<button class="btn btn-large btn-primary" type="button" data-toggle="modal" href="#showInput">Add</button>
+
+<!-- Modal Popup, Add Image -->
+<div id="showInput" class="modal hide">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">x</button>
+		<h3>Image Information</h3>
+	</div>
+	<div class="modal-body">
+		<form class="form-horizontal">
+		<fieldset>
+			<div class="control-group">
+	            <label class="control-label" for="input01">URL</label>
+	            <div class="controls">
+					<input type="text" class="input-xlarge" data-tag="image:url">
+	            </div>
+			</div>
+			<div class="control-group">
+	            <label class="control-label" for="input01">Description</label>
+	            <div class="controls">
+					<input type="text" class="input-xlarge" data-tag="image:desc">
+	            </div>
+			</div>
+		</fieldset>
+		</form>
+	</div>
+	<div class="modal-footer">
+	    <a href="#" class="btn" data-dismiss="modal">Close</a>
+	    <a href="#" class="btn btn-primary" data-act="addImage">Add</a>
+	</div>
+</div>
+</body>
+</html>

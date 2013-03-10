@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<META name="Title" content="[JavaScript Library] - vojs demo">
+<META name="Description" content="JavaScript Library for UI development">
+<META name="Keywords" content="javascript,js,jquery,ui,underscore,mvvm,vo,view,object,view-object">
+<META name="Author" content="Moon-Hak-I">
+<META name="Reply-To(Email)" content="seogi1004@naver.com">
+<META name="Robots" content="ALL">
+<META name="Robots" content="index,follow">
+	
+<script src="../core/jquery.min.js"></script>
+<script src="../jquery.vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>body { padding: 5px; }</style>
+
+<script>
+    var Progress = function() {
+    	$("body").applyVo(this);
+    	
+    	var percent = { blue: 0, green: 0, red: 0 };
+    	var bind = this.bind,
+    		act = this.act;
+    		    	
+    	act.start = function(e, key) {
+    		if(percent[key] < 100) {
+    			percent[key] += 20;
+    			bind.percent(key, percent[key] + "%");
+    		}
+    	}
+    }
+    
+    $(function() {
+    	new Progress();
+	});	
+</script>
+</head>
+<body>
+	<div class="progress progress-primary">
+		<div class="bar" style="width: 0%" data-bind="percent:blue#width"></div>
+	</div>
+	<div class="progress progress-success">
+		<div class="bar" style="width: 0%" data-bind="percent:green#width"></div>
+	</div>
+	<div class="progress progress-danger">
+		<div class="bar" style="width: 0%" data-bind="percent:red#width"></div>
+	</div>
+	
+	<div class="btn-group">
+		<button class="btn" data-act="start:blue">Blue</button>
+		<button class="btn" data-act="start:green">Green</button>
+		<button class="btn" data-act="start:red">Red</button>
+	</div>
+</body>
+</html>

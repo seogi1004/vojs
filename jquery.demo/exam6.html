@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<META name="Title" content="[JavaScript Library] - vojs demo">
+<META name="Description" content="JavaScript Library for UI development">
+<META name="Keywords" content="javascript,js,jquery,ui,underscore,mvvm,vo,view,object,view-object">
+<META name="Author" content="Moon-Hak-I">
+<META name="Reply-To(Email)" content="seogi1004@naver.com">
+<META name="Robots" content="ALL">
+<META name="Robots" content="index,follow">
+	
+<script src="../core/jquery.min.js"></script>
+<script src="../jquery.vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>body { padding: 20px; }</style>
+
+<script>
+    $(function() {
+		$("body").applyVo(function(vo) {
+			var tag = vo.tag;
+			
+			vo.act.showTag = function(e) {
+				alert($(tag.button).html());
+				
+				for(var i in tag.info) {
+					alert(i + " : " + tag.info[i].value);
+				}
+			}
+		});
+	});	
+</script>
+</head>
+<body>
+<form class="form-horizontal">
+	<fieldset>
+		<div class="control-group">
+            <label class="control-label" for="input01">Name</label>
+            <div class="controls">
+				<input type="text" class="input-xlarge" value="Moon-Hak-I" data-tag="info:name">
+            </div>
+		</div>
+		<div class="control-group">
+            <label class="control-label" for="input01">Age</label>
+            <div class="controls">
+				<input type="text" class="input-xlarge" value="27" data-tag="info:age">
+            </div>
+		</div>
+		<div class="control-group">
+            <label class="control-label" for="input01">Location</label>
+            <div class="controls">
+				<input type="text" class="input-xlarge" value="Seoul" data-tag="info:location">
+            </div>
+		</div>
+		<div class="control-group">
+            <label class="control-label" for="input01">&nbsp;</label>
+            <div class="controls">
+				<a href="#" class="btn" data-act="showTag" data-tag="button">Tag</a>
+            </div>
+		</div>
+	</fieldset>
+</form>
+</body>
+</html>

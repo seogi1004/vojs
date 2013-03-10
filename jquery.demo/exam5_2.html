@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<META name="Title" content="[JavaScript Library] - vojs demo">
+<META name="Description" content="JavaScript Library for UI development">
+<META name="Keywords" content="javascript,js,jquery,ui,underscore,mvvm,vo,view,object,view-object">
+<META name="Author" content="Moon-Hak-I">
+<META name="Reply-To(Email)" content="seogi1004@naver.com">
+<META name="Robots" content="ALL">
+<META name="Robots" content="index,follow">
+	
+<script src="../core/jquery.min.js"></script>
+<script src="../jquery.vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>body { padding: 5px; } .btn { width: 220px; }</style>
+
+<script>
+    $(function() {
+		$("body").applyVo(function(vo) {
+			vo.act.test1 = function(e, k) {
+				alert("test1-" + k);
+			}
+			
+			vo.act.test2 = function(e, k) {
+				alert("test2-" + k);
+			}
+		});
+	});	
+</script>
+</head>
+<body>
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th width="50px">No.</th>
+			<th width="100px">Type</th>
+			<th width="222px">Action</th>
+			<th>Attribute</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>1-1</td>
+			<td>click</td>
+			<td><button class="btn" type="button" data-act="test1:1">Click Test (default)</button></td>
+			<td>data-act="test1:1"</td>
+		</tr>
+		<tr>
+			<td>1-2</td>
+			<td>click</td>
+			<td><button class="btn" type="button" data-act="test1:2">Click Test (default)</button></td>
+			<td>data-act="test1:2"</td>
+		</tr>
+		<tr>
+			<td>2-1</td>
+			<td>dblclick</td>
+			<td><button class="btn" type="button" data-act="test2:1#dblclick">Double-Click Test</button></td>
+			<td>data-act="test2:1#dblclick"</td>
+		</tr>
+		<tr>
+			<td>2-2</td>
+			<td>dblclick</td>
+			<td><button class="btn" type="button" data-act="test2:2#dblclick">Double-Click Test</button></td>
+			<td>data-act="test2:2#dblclick"</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<META name="Title" content="[JavaScript Library] - vojs demo">
+<META name="Description" content="JavaScript Library for UI development">
+<META name="Keywords" content="javascript,js,jquery,ui,underscore,mvvm,vo,view,object,view-object">
+<META name="Author" content="Moon-Hak-I">
+<META name="Reply-To(Email)" content="seogi1004@naver.com">
+<META name="Robots" content="ALL">
+<META name="Robots" content="index,follow">
+	
+<script src="../core/jquery.min.js"></script>
+<script src="../jquery.vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>body { padding: 5px; }</style>
+
+<script>
+	var Person = function(id, name, age) {
+		$("#" + id).applyVo(this);
+		   
+		var self = this;
+		   
+		self.name = name;
+		self.age = age;
+		   
+		self.bind.name(self.name);
+		self.bind.age(self.age);
+		   
+		self.act.addAge = function() {
+			self.bind.age(++self.age);
+		}
+	}
+
+    $(function() {
+		var person1 = new Person("person1", "James", 21),
+			person2 = new Person("person2", "Thomas", 15);
+	});	
+</script>
+</head>
+<body>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th width="33%">Name</th>
+			<th width="33%">Age</th>
+			<th>-</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr id="person1">
+			<td data-bind="name"></td>
+			<td data-bind="age"></td>
+			<td><button class="btn" type="button" data-act="addAge">Add 1-year</button></td>
+		</tr>
+		<tr id="person2">
+			<td data-bind="name"></td>
+			<td data-bind="age"></td>
+			<td><button class="btn" type="button" data-act="addAge">Add 1-year</button></td>
+		</tr>
+	</tbody>
+</table>
+
+</body>
+</html>

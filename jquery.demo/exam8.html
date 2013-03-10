@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<META name="Title" content="[JavaScript Library] - vojs demo">
+<META name="Description" content="JavaScript Library for UI development">
+<META name="Keywords" content="javascript,js,jquery,ui,underscore,mvvm,vo,view,object,view-object">
+<META name="Author" content="Moon-Hak-I">
+<META name="Reply-To(Email)" content="seogi1004@naver.com">
+<META name="Robots" content="ALL">
+<META name="Robots" content="index,follow">
+	
+<script src="../core/jquery.min.js"></script>
+<script src="../jquery.vo.js"></script>
+
+<link rel="stylesheet" href="http://static.inpost.kr/lib/bootstrap/2.1.1/css/bootstrap.min.css" />
+<script src="http://static.inpost.kr/lib/bootstrap/2.1.1/js/bootstrap.min.js"></script>
+<style>
+	body { padding: 20px; }
+	#body { margin-bottom: 15px; }
+	.row { background-color: #dcdcdc; margin-bottom: 20px; margin-left: 1px; }
+	.progress { margin-bottom: 10px; }
+</style>
+
+<script>
+	var Progress = function() {
+		$("#body").appendVo(this, '#tpl_prog');
+		
+		var self = this,
+			percent = 0;
+			
+		function run() {
+    		if(percent < 100) {
+	        	percent += 5;
+	        	self.bind.percent(percent + "%");
+	        	
+	        	setTimeout(run, 100);
+	    	}
+    	}
+    	
+		self.act.start = function(e) {
+			$(e.target).remove();
+			run();
+		}
+	}
+	
+	function create() {
+		new Progress();
+	}
+</script>
+</head>
+<body>
+
+<div id="body"><!-- append to view-template --></div>
+<button class="btn-large btn-primary" onclick="create()">Create</button>
+
+<script id="tpl_prog" type="text/template">
+	<div id="<%= viewId %>" class="row">
+		<div class="progress progress-info">
+			<div class="bar" style="width: 0%" data-bind="percent#width"></div>
+		</div>
+		<button class="btn-small" data-act="start">Start</button>
+	</div>
+</script>
+
+</body>
+</html>
